@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { CrwalingApi } from "../api";
+import Loader from "./Loader";
+
 export default () => {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   useEffect(() => {
     const fetchDataAPI = async () => {
       try {
-        const res = await CrwalingApi.naverDust();
-        console.log(res);
-        setData(res);
-      } catch (error) {}
+        const { data } = await CrwalingApi.naverDust();
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        console.error("error:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchDataAPI();
 
     return () => {};
   }, []);
 
-  return (
-    <>
-      <h1>NAVER CRWALING</h1>
-      <div>{JSON.stringify(data)}</div>
-    </>
-  );
+  if (loading) {
+    return <Loader />;
+  } else {
+    return (
+      <>
+        <h1>NAVER CRWALING</h1>
+        <div>{JSON.stringify(data)}</div>
+      </>
+    );
+  }
 };
