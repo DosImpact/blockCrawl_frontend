@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import Axios from "axios";
+import React from "react";
+import NaverCrwal from "../../components/NaverCrawl";
 
 const HomeContainer = () => {
-  const handleClick = async () => {
-    console.log("Clicked");
-    const res = await Axios.get("http://localhost:4000/api/start");
-    console.log(res);
-  };
-
   return (
     <>
-      <button onClick={handleClick}>Click Trigger</button>
+      <NaverCrwal />
     </>
   );
 };
