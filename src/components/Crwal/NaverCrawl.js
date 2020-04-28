@@ -3,6 +3,7 @@ import { CrwalingApi } from "../../api";
 import Loader from "../Loader";
 
 export default () => {
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -13,6 +14,7 @@ export default () => {
         setData(data);
       } catch (error) {
         console.error("error:", error);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -25,12 +27,21 @@ export default () => {
   if (loading) {
     return <Loader />;
   } else {
-    return (
-      <>
-        <h1>NAVER CRWALING</h1>
-        <h2>{data.result}</h2>
-        <h2>{data.data}</h2>
-      </>
-    );
+    if (error) {
+      return (
+        <>
+          <h1>NAVER CRWALING Fail</h1>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h1>NAVER CRWALING</h1>
+          <div>{JSON.stringify(data)}</div>
+          <h2>{data.result}</h2>
+          <h2>{data.data}</h2>
+        </>
+      );
+    }
   }
 };
