@@ -3,6 +3,6 @@
 # package
 
 ```
-npm insatll react-router-dom
+npm install react-router-dom axios
 npm install styled-components styled-reset
 ```
