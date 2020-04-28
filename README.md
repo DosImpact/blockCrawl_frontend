@@ -11,6 +11,12 @@
 - N url | N selector
 - N url | N selector > xlsx
 
+# Design Ref
+
+- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428533?mode=media
+- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428534?mode=media
+- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428535?mode=media
+
 # package
 
 ```
