@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { CrwalingApi } from "../api";
-import Loader from "./Loader";
+import { CrwalingApi } from "../../api";
+import Loader from "../Loader";
 
 export default () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,8 @@ export default () => {
     return (
       <>
         <h1>NAVER CRWALING</h1>
-        <div>{JSON.stringify(data)}</div>
+        <h2>{data.result}</h2>
+        <h2>{data.data}</h2>
       </>
     );
   }
