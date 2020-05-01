@@ -9,7 +9,7 @@ import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
 
 const N_URL_TAG = gql`
-  query NurlTagQuery($tag: String, $urls: [String]) {
+  query NurlTagQuery($tag: String!, $urls: [String!]!) {
     NurlTag(tag: $tag, urls: $urls)
   }
 `;
@@ -32,7 +32,6 @@ export default () => {
     console.log(urls);
     console.log(tag);
     getNurlTag({ variables: { tag, urls } });
-    console.log("data from server", data);
   };
   return (
     <>
@@ -42,6 +41,7 @@ export default () => {
       <h2>tags</h2>
       <input type="text" {...tagInput}></input>
       {loading && <Loader />}
+      {data && JSON.stringify(data)}
       <button onClick={submitBtn}>OK</button>
     </>
   );
