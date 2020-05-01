@@ -15,7 +15,7 @@ const N_URL_TAG = gql`
 `;
 
 export default () => {
-  const [getNurlTag, { loading, error, data }] = useLazyQuery(N_URL_TAG);
+  const [getNurlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
   const urlsInput = useInput();
   const tagInput = useInput();
   const submitBtn = async () => {
