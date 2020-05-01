@@ -17,6 +17,7 @@ const globalStyles = createGlobalStyle`
         color: #42505C;
         padding-top:50px;
         margin:20px;
+        margin-left:200px;
     }
 `;
 

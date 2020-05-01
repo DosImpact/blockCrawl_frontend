@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: "http://localhost:4000/api/",
 });
 
-export const CrwalingApi = {
+export const CrwalingRestAPI = {
   naverDust: () => api.get("start"),
 };
 

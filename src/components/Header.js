@@ -20,8 +20,8 @@ export default withRouter(({ location: { pathname } }) => (
 ));
 
 const Header = styled.header`
-  height: 50px;
-  width: 100%;
+  height: 100%;
+  width: 200px;
   position: fixed;
   top: 0;
   left: 0;
@@ -32,22 +32,20 @@ const Header = styled.header`
 `;
 
 const List = styled.ul`
-  height: 50px;
-
+  height: 100%;
   display: flex;
+  flex-direction: column;
 `;
 
 const ListItem = styled.li`
-  height: 50px;
-  width: 100px;
+  height: 100%;
   border-bottom: 3px solid
     ${(props) => (props.current ? props.theme.pupleColor : "transparent")};
   transition: all 0.5s ease-in-out;
 `;
 
 const SLink = styled(Link)`
-  height: 50px;
-  width: 100px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

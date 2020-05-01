@@ -4,6 +4,7 @@
 
 - one url | one selector 컴포넌트 개발 | 단순 주소 입력 > 단순 셀럭터 하나 입력
 - N url | one selector
+- eg) TDD1 : 네이버 영화 사이트 url 여러개 입력하고, 특정 태그 넣기. 그리고 반환하는 컴포넌트 제작
 - N url | one selector, next one
 - N url | one selector, 하위 one
 - N url | img
@@ -16,6 +17,7 @@
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428533?mode=media
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428534?mode=media
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428535?mode=media
+- https://www.youtube.com/watch?v=EaYfFYZ4f3I
 
 # package
 
