@@ -9,4 +9,6 @@ export default {
 
   darkColor: "#42505C",
   lightDarkColor: "#B9BDC4",
+
+  listSize: "60px",
 };

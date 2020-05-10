@@ -1,5 +1,14 @@
 # BlockCrwal/FrontEnd
 
+# Process
+
+```
+1. 백엔드 API -> 대응하는 프론트 로직 구현하기
+
+2. 스토리 보드 및 디자인
+
+```
+
 # TODO = LIST
 
 - one url | one selector 컴포넌트 개발 | 단순 주소 입력 > 단순 셀럭터 하나 입력
@@ -18,18 +27,6 @@
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428534?mode=media
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428535?mode=media
 - https://www.youtube.com/watch?v=EaYfFYZ4f3I
-
-# package
-
-```
-npm install react-router-dom axios
-npm install styled-components styled-reset
-
-yarn add @apollo/react-hooks
-yarn add apollo-boost
-yarn add graphql
-yarn add graphql-tag
-```
 
 # Basic REST API
 
