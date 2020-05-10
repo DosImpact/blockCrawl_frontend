@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import useInput from "../../hooks/useInput";
+import Section from "../../components/Section";
+import styled from "styled-components";
 /**
  * 사용자가 url를 TextArea에 붙여넣고 , 개행별로 구분을 해서 파싱을 해보자.
  */
@@ -13,6 +15,19 @@ const N_URL_TAG = gql`
     NurlTag(tag: $tag, urls: $urls)
   }
 `;
+
+const TextArea = styled.textarea`
+  height: 50%;
+  width: 80%;
+`;
+
+const ItemList = ({ num, item }) => {
+  return (
+    <div>
+      {num} . : {item}
+    </div>
+  );
+};
 
 export default () => {
   const [getNurlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
@@ -35,14 +50,19 @@ export default () => {
   };
   return (
     <>
-      <h1>NurlTag Components</h1>
-      <h2>urls</h2>
-      <textarea {...urlsInput}></textarea>
-      <h2>tags</h2>
-      <input type="text" {...tagInput}></input>
-      {loading && <Loader />}
-      {data && JSON.stringify(data)}
-      <button onClick={submitBtn}>OK</button>
+      <Section name="NurlTag Components">
+        <h2>URLS</h2>
+        <TextArea {...urlsInput}></TextArea>
+        <h2>TAGS</h2>
+        <input type="text" {...tagInput}></input>
+        {loading && <Loader />}
+        <button onClick={submitBtn}>OK</button>
+        {data &&
+          data.NurlTag &&
+          JSON.parse(data.NurlTag).map((e, idx) => (
+            <ItemList key={idx} num={idx} item={e} />
+          ))}
+      </Section>
     </>
   );
 };

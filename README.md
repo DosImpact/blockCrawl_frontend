@@ -28,47 +28,6 @@
 - https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428535?mode=media
 - https://www.youtube.com/watch?v=EaYfFYZ4f3I
 
-# Basic REST API
-
-```js
-import React, { useEffect, useState } from "react";
-import { CrwalingApi } from "../../api";
-import Loader from "../Loader";
-
-export default () => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    const fetchDataAPI = async () => {
-      try {
-        const { data } = await CrwalingApi.naverDust();
-        console.log(data);
-        setData(data);
-      } catch (error) {
-        console.error("error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDataAPI();
-
-    return () => {};
-  }, []);
-
-  if (loading) {
-    return <Loader />;
-  } else {
-    return (
-      <>
-        <h1>NAVER CRWALING</h1>
-        <h2>{data.result}</h2>
-        <h2>{data.data}</h2>
-      </>
-    );
-  }
-};
-```
-
 # Basic Graph API
 
 ```js
@@ -91,6 +50,36 @@ export default () => {
       <h2>NaverDust Test</h2>
       {loading ? <Loader /> : <div> {JSON.stringify(data)} </div>}
     </div>
+  );
+};
+```
+
+```js
+const HELLO_4 = gql`
+  query hello($id: Int!, $name: String!, $info: [String!]!) {
+    hello4(id: $id, name: $name, info: $info)
+  }
+`;
+
+const QueryPractice = () => {
+  const [getHello, { loading, data }] = useLazyQuery(HELLO_4);
+  const handleClick = () => {
+    console.log("handleClick Event");
+    getHello({
+      variables: {
+        id: 777,
+        name: "DOSimpact",
+        info: ["im handsome", "eat kimchi"],
+      },
+    });
+  };
+  return (
+    <>
+      <h2>Query Practice</h2>
+      {loading && "Loading..."}
+      {data && JSON.stringify(data)}
+      <button onClick={handleClick}>Fetching</button>
+    </>
   );
 };
 ```

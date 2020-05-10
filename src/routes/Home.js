@@ -1,56 +1,17 @@
 import React from "react";
+import styled from "styled-components";
 import { NurlTag } from "../components/Crwal";
 
-import gql from "graphql-tag";
-import { useQuery, useLazyQuery } from "@apollo/react-hooks";
-
-const HELLO_2 = gql`
-  query {
-    hello2
-  }
+const HomeContainer = styled.div`
+  margin: 20px;
 `;
-
-const HELLO_3 = gql`
-  query hello($id: Int!) {
-    hello3(id: $id)
-  }
-`;
-
-const HELLO_4 = gql`
-  query hello($id: Int!, $name: String!, $info: [String!]!) {
-    hello4(id: $id, name: $name, info: $info)
-  }
-`;
-
-const QueryPractice = () => {
-  const [getHello, { loading, data }] = useLazyQuery(HELLO_4);
-  const handleClick = () => {
-    console.log("handleClick Event");
-    getHello({
-      variables: {
-        id: 777,
-        name: "DOSimpact",
-        info: ["im handsome", "eat kimchi"],
-      },
-    });
-  };
-  return (
-    <>
-      <h2>Query Practice</h2>
-      {loading && "Loading..."}
-      {data && JSON.stringify(data)}
-      <button onClick={handleClick}>Fetching</button>
-    </>
-  );
-};
 
 const Home = () => {
   return (
-    <>
-      <h2>Home</h2>
-      <QueryPractice />
+    <HomeContainer>
       <NurlTag />
-    </>
+      <iframe src="http://localhost:4000/" height="1000px" width="80%"></iframe>
+    </HomeContainer>
   );
 };
 
