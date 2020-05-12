@@ -3,6 +3,7 @@ import reset from "styled-reset";
 
 const globalStyles = createGlobalStyle`
     ${reset};
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
     a{
         text-decoration:none;
         color:inherit;
