@@ -10,7 +10,6 @@ const Home = () => {
   return (
     <HomeContainer>
       <NurlTag />
-      <iframe src="http://localhost:4000/" height="1000px" width="80%"></iframe>
     </HomeContainer>
   );
 };

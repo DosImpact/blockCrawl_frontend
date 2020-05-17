@@ -3,7 +3,6 @@ import reset from "styled-reset";
 
 const globalStyles = createGlobalStyle`
     ${reset};
-    @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
     a{
         text-decoration:none;
         color:inherit;
@@ -16,7 +15,7 @@ const globalStyles = createGlobalStyle`
         font-size:12px;
         background-color:whitesmoke;
         color: #42505C;
-        padding-top:50px;
+        padding-top:60px;
         margin:20px;
         margin-left:200px;
     }
