@@ -9,44 +9,62 @@ import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
 
+const SERVER_URI = "http://localhost:4000/";
+
 const N_URL_TAG = gql`
-  query urlTagQuery($tag: String!, $url: String!) {
-    urlTag(tag: $tag, url: $url)
+  query urlPDFQuery($url: String!) {
+    urlPDF(url: $url)
   }
 `;
 
 export default () => {
-  const [getUrlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
-  const urlInput = useInput(
-    "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321"
-  );
-  const tagInput = useInput(
-    "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)"
-  );
+  const [getUrlPDF, { loading, data }] = useLazyQuery(N_URL_TAG);
+  const urlInput = useInput("https://www.instagram.com/?hl=en");
+
   const submitBtn = async () => {
-    console.log("submit");
     let url = null;
-    let tag = null;
     if (urlInput.value) {
       url = String(urlInput.value);
     }
-    if (tagInput.value) {
-      tag = String(tagInput.value);
-    }
-    getUrlTag({ variables: { tag, url } });
+    await getUrlPDF({
+      variables: {
+        url,
+      },
+    });
   };
+
+  const handleGetFile = (src) => {
+    console.log("handleGetFile", src);
+    const downloaderTag = document.createElement("iframe");
+    const BASE_URL = "http://localhost:4000/download/";
+    downloaderTag.src = src;
+    downloaderTag.style.display = "none";
+    console.log("donwload start...", src);
+    document.body.appendChild(downloaderTag);
+  };
+
   return (
     <Wrapper>
-      <Section name="WebSite Convert PDF" className="nurltag__section">
+      <Section name="WebSite convert PDF" className="urlcapture__section">
         <h2 className="typo">URL</h2>
-        <Input className="nurltag__input" type="text" {...urlInput}></Input>
-        <h2 className="typo">TAGS</h2>
-        <Input className="nurltag__input" type="text" {...tagInput}></Input>
-        <Button className="nurltag__summit" onClick={submitBtn} text="OK" />
-
+        <Input className="urlcapture__input" type="text" {...urlInput}></Input>
+        <Button className="urlcapture__summit" onClick={submitBtn} text="OK" />
+        <h2 className="typo">result</h2>
         {loading && <Loader />}
-
-        {data && data.urlTag && JSON.parse(data.urlTag)}
+        {console.log(data)}
+        {data ? (
+          <>
+            <Button
+              text={"GET PDF"}
+              className="urlcapture__summit"
+              onClick={() =>
+                handleGetFile(`${SERVER_URI}download/${data?.urlPDF}`)
+              }
+            />
+          </>
+        ) : (
+          ""
+        )}
       </Section>
     </Wrapper>
   );
@@ -54,13 +72,13 @@ export default () => {
 
 const Wrapper = styled.div`
   width: 700px;
-  & .nurltag__section {
+  & .urlcapture__section {
     padding: 20px;
   }
-  & .nurltag__input {
+  & .urlcapture__input {
     width: 80%;
   }
-  & .nurltag__textarea {
+  & .urlcapture__textarea {
     width: 80%;
     height: 200px;
   }
@@ -68,7 +86,9 @@ const Wrapper = styled.div`
     margin: 10px;
     text-transform: uppercase;
   }
-  & .nurltag__summit {
+  & .urlcapture__summit {
     margin-top: 20px;
+    width: 100px;
+    height: 50px;
   }
 `;

@@ -95,5 +95,7 @@ const Wrapper = styled.div`
   }
   & .urlcapture__summit {
     margin-top: 20px;
+    width: 100px;
+    height: 50px;
   }
 `;
