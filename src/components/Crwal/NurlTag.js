@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import useInput from "../../hooks/useInput";
 import Section from "../../components/Section";
 import styled from "styled-components";
-/**
- * 사용자가 url를 TextArea에 붙여넣고 , 개행별로 구분을 해서 파싱을 해보자.
- */
+import Input from "../../components/Input";
+import TextArea from "../../components/TextArea";
+import Button from "../../components/Button";
 
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
@@ -14,11 +14,6 @@ const N_URL_TAG = gql`
   query NurlTagQuery($tag: String!, $urls: [String!]!) {
     NurlTag(tag: $tag, urls: $urls)
   }
-`;
-
-const TextArea = styled.textarea`
-  height: 50%;
-  width: 80%;
 `;
 
 const ItemList = ({ num, item }) => {
@@ -31,8 +26,21 @@ const ItemList = ({ num, item }) => {
 
 export default () => {
   const [getNurlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
-  const urlsInput = useInput();
-  const tagInput = useInput();
+  const urlsInput = useInput(
+    "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=134963\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=193839\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=182042\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=193214\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=183991\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=169665\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=188993\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=180369\n" +
+      "https://movie.naver.com/movie/bi/mi/basic.nhn?code=190568\n"
+  );
+  const tagInput = useInput(
+    "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)"
+  );
   const submitBtn = async () => {
     console.log("submit");
     let urls = null;
@@ -44,25 +52,44 @@ export default () => {
     if (tagInput.value) {
       tag = String(tagInput.value);
     }
-    console.log(urls);
-    console.log(tag);
     getNurlTag({ variables: { tag, urls } });
   };
   return (
-    <>
-      <Section name="NurlTag Components">
-        <h2>URLS</h2>
-        <TextArea {...urlsInput}></TextArea>
-        <h2>TAGS</h2>
-        <input type="text" {...tagInput}></input>
+    <Wrapper>
+      <Section name="NurlTag Components" className="nurltag__section">
+        <h2 className="typo">URLS</h2>
+        <TextArea className="nurltag__textarea" {...urlsInput}></TextArea>
+
+        <h2 className="typo">TAGS</h2>
+        <Input className="nurltag__input" type="text" {...tagInput}></Input>
+        <Button className="nurltag__summit" onClick={submitBtn} text="OK" />
         {loading && <Loader />}
-        <button onClick={submitBtn}>OK</button>
         {data &&
           data.NurlTag &&
           JSON.parse(data.NurlTag).map((e, idx) => (
             <ItemList key={idx} num={idx} item={e} />
           ))}
       </Section>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 700px;
+  & .nurltag__section {
+    padding: 20px;
+  }
+  & .nurltag__input {
+    width: 80%;
+  }
+  & .nurltag__textarea {
+    width: 80%;
+    height: 200px;
+  }
+  & .typo {
+    margin: 10px;
+  }
+  & .nurltag__summit {
+    margin-top: 20px;
+  }
+`;
