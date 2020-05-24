@@ -66,6 +66,7 @@ const Wrapper = styled.div`
   }
   & .typo {
     margin: 10px;
+    text-transform: uppercase;
   }
   & .nurltag__summit {
     margin-top: 20px;

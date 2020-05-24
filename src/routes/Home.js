@@ -13,7 +13,7 @@ const ListItem = ({ name, event }) => {
 };
 
 const Home = () => {
-  const [selection, setSelection] = useState(0);
+  const [selection, setSelection] = useState(2);
 
   return (
     <HomeContainer>
