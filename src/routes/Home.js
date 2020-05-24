@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NurlTag, UrlTag } from "../components/Crwal";
-import Grid from "../components/Grid";
+import { NurlTag, UrlTag, UrlCapture, UrlPDF } from "../components/Crwal";
 
 const Name = ["NurlTag", "UrlTag", "urlCapture", "urlPDF"];
 
@@ -30,6 +29,8 @@ const Home = () => {
       </List>
       {selection === 0 && <NurlTag />}
       {selection === 1 && <UrlTag />}
+      {selection == 2 && <UrlCapture />}
+      {selection == 3 && <UrlPDF />}
     </HomeContainer>
   );
 };

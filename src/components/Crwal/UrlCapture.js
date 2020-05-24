@@ -37,7 +37,7 @@ export default () => {
   };
   return (
     <Wrapper>
-      <Section name="urlTag Components" className="nurltag__section">
+      <Section name="Screenshot WebSite" className="nurltag__section">
         <h2 className="typo">URL</h2>
         <Input className="nurltag__input" type="text" {...urlInput}></Input>
         <h2 className="typo">TAGS</h2>

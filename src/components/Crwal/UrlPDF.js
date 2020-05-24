@@ -2,67 +2,72 @@ import React, { useState } from "react";
 import useInput from "../../hooks/useInput";
 import Section from "../../components/Section";
 import styled from "styled-components";
-/**
- * 사용자가 url를 TextArea에 붙여넣고 , 개행별로 구분을 해서 파싱을 해보자.
- */
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
 
 const N_URL_TAG = gql`
-  query NurlTagQuery($tag: String!, $urls: [String!]!) {
-    NurlTag(tag: $tag, urls: $urls)
+  query urlTagQuery($tag: String!, $url: String!) {
+    urlTag(tag: $tag, url: $url)
   }
 `;
 
-const TextArea = styled.textarea`
-  height: 50%;
-  width: 80%;
-`;
-
-const ItemList = ({ num, item }) => {
-  return (
-    <div>
-      {num} . : {item}
-    </div>
-  );
-};
-
 export default () => {
-  const [getNurlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
-  const urlsInput = useInput();
-  const tagInput = useInput();
+  const [getUrlTag, { loading, data }] = useLazyQuery(N_URL_TAG);
+  const urlInput = useInput(
+    "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321"
+  );
+  const tagInput = useInput(
+    "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)"
+  );
   const submitBtn = async () => {
     console.log("submit");
-    let urls = null;
+    let url = null;
     let tag = null;
-    if (urlsInput.value) {
-      urls = String(urlsInput.value).trim().split("\n");
-      console.log(urls);
+    if (urlInput.value) {
+      url = String(urlInput.value);
     }
     if (tagInput.value) {
       tag = String(tagInput.value);
     }
-    console.log(urls);
-    console.log(tag);
-    getNurlTag({ variables: { tag, urls } });
+    getUrlTag({ variables: { tag, url } });
   };
   return (
-    <>
-      <Section name="NurlTag Components">
-        <h2>URLS</h2>
-        <TextArea {...urlsInput}></TextArea>
-        <h2>TAGS</h2>
-        <input type="text" {...tagInput}></input>
+    <Wrapper>
+      <Section name="WebSite Convert PDF" className="nurltag__section">
+        <h2 className="typo">URL</h2>
+        <Input className="nurltag__input" type="text" {...urlInput}></Input>
+        <h2 className="typo">TAGS</h2>
+        <Input className="nurltag__input" type="text" {...tagInput}></Input>
+        <Button className="nurltag__summit" onClick={submitBtn} text="OK" />
+
         {loading && <Loader />}
-        <button onClick={submitBtn}>OK</button>
-        {data &&
-          data.NurlTag &&
-          JSON.parse(data.NurlTag).map((e, idx) => (
-            <ItemList key={idx} num={idx} item={e} />
-          ))}
+
+        {data && data.urlTag && JSON.parse(data.urlTag)}
       </Section>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 700px;
+  & .nurltag__section {
+    padding: 20px;
+  }
+  & .nurltag__input {
+    width: 80%;
+  }
+  & .nurltag__textarea {
+    width: 80%;
+    height: 200px;
+  }
+  & .typo {
+    margin: 10px;
+  }
+  & .nurltag__summit {
+    margin-top: 20px;
+  }
+`;

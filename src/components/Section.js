@@ -8,10 +8,18 @@ const SectionContainer = styled.div`
   align-items: center;
   border: 3px solid ${(props) => props.theme.lightPupleColor};
   font-size: 15px;
+  transition: all 0.5s ease-in-out;
+  :hover {
+    border: 3px solid ${(props) => props.theme.pupleColor};
+    .Section__Name {
+      border-bottom: 3px solid ${(props) => props.theme.pupleColor};
+    }
+  }
   .Section__Name {
     font-size: 30px;
     font-weight: 600;
     margin: 30px;
+    transition: all 0.5s ease-in-out;
     border-bottom: 3px solid ${(props) => props.theme.lightPupleColor};
   }
 `;
