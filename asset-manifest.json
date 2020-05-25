@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/blockCrawl_frontend/static/js/main.1cfaa31f.chunk.js",
-    "main.js.map": "/blockCrawl_frontend/static/js/main.1cfaa31f.chunk.js.map",
+    "main.js": "/blockCrawl_frontend/static/js/main.b6e89f45.chunk.js",
+    "main.js.map": "/blockCrawl_frontend/static/js/main.b6e89f45.chunk.js.map",
     "runtime-main.js": "/blockCrawl_frontend/static/js/runtime-main.274aec43.js",
     "runtime-main.js.map": "/blockCrawl_frontend/static/js/runtime-main.274aec43.js.map",
     "static/js/2.5aadeadc.chunk.js": "/blockCrawl_frontend/static/js/2.5aadeadc.chunk.js",
     "static/js/2.5aadeadc.chunk.js.map": "/blockCrawl_frontend/static/js/2.5aadeadc.chunk.js.map",
     "index.html": "/blockCrawl_frontend/index.html",
-    "precache-manifest.cac1ff614d6e8a12d073013d0f99ccb1.js": "/blockCrawl_frontend/precache-manifest.cac1ff614d6e8a12d073013d0f99ccb1.js",
+    "precache-manifest.0f677c8554ff58e11e59aebef815efa3.js": "/blockCrawl_frontend/precache-manifest.0f677c8554ff58e11e59aebef815efa3.js",
     "service-worker.js": "/blockCrawl_frontend/service-worker.js",
     "static/js/2.5aadeadc.chunk.js.LICENSE.txt": "/blockCrawl_frontend/static/js/2.5aadeadc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.274aec43.js",
     "static/js/2.5aadeadc.chunk.js",
-    "static/js/main.1cfaa31f.chunk.js"
+    "static/js/main.b6e89f45.chunk.js"
   ]
 }
