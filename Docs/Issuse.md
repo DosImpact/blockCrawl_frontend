@@ -4,3 +4,9 @@
 
 - [https://medium.com/@ariel.salem1989/communicating-with-iframes-712fdc2b4d14](https://medium.com/@ariel.salem1989/communicating-with-iframes-712fdc2b4d14)
 - 해결 : window.postMessage();
+
+# 02. HTTPS 문제
+
+```
+httpLink.ts:134 Mixed Content: The page at 'https://dosimpact.github.io/' was loaded over HTTPS, but requested an insecure resource 'http://133.186.241.220:4000/'. This request has been blocked; the content must be served over HTTPS.
+```

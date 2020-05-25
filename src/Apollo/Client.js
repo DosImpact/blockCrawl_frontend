@@ -1,8 +1,10 @@
 import ApolloClient from "apollo-boost";
 import { defaults, resolvers } from "./LocalState";
 
+import { SERVER_URI } from "../config/key";
+
 export default new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: SERVER_URI,
   clientState: {
     defaults,
     resolvers,

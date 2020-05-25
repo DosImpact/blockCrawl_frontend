@@ -8,8 +8,7 @@ import Button from "../../components/Button";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
-
-const SERVER_URI = "http://localhost:4000/";
+import { SERVER_URI } from "../../config/key";
 
 const N_URL_TAG = gql`
   query urlCaptureQuery($url: String!) {
