@@ -26,8 +26,8 @@ export default withRouter(({ location: { pathname } }) => (
       <ListItem current={pathname === "/info" ? true : false}>
         <SLink to={{ pathname: "/info" }}>🌊 Quick Filters</SLink>
       </ListItem>
-      <ListItem current={pathname === "/profile" ? true : false}>
-        <SLink to={{ pathname: "/profile" }}>⌛️ Recent Tasks</SLink>
+      <ListItem current={pathname === "/block" ? true : false}>
+        <SLink to={{ pathname: "/block" }}>⌛️ block Tasks</SLink>
       </ListItem>
       <ListItem current={pathname === "/Team" ? true : false}>
         <SLink to={{ pathname: "/Team" }}>🏰 Team Collaborations</SLink>
