@@ -29,14 +29,14 @@ export default withRouter(({ location: { pathname } }) => (
       <ListItem current={pathname === "/block" ? true : false}>
         <SLink to={{ pathname: "/block" }}>⌛️ block Tasks</SLink>
       </ListItem>
-      <ListItem current={pathname === "/Team" ? true : false}>
-        <SLink to={{ pathname: "/Team" }}>🏰 Team Collaborations</SLink>
+      <ListItem current={pathname === "/team" ? true : false}>
+        <SLink to={{ pathname: "/team" }}>🏰 Team Collaborations</SLink>
       </ListItem>
       <ListItem current={pathname === "/DataService" ? true : false}>
-        <SLink to={{ pathname: "/DataService" }}>📊 Data Service</SLink>
+        <SLink to={{ pathname: "/dataservice" }}>📊 Data Service</SLink>
       </ListItem>
       <ListItem current={pathname === "/Contact" ? true : false}>
-        <SLink to={{ pathname: "/Contact" }}>📱 Contact Us</SLink>
+        <SLink to={{ pathname: "/contact" }}>📱 Contact Us</SLink>
       </ListItem>
     </List>
   </Header>
