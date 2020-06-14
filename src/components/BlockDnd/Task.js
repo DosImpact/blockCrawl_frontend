@@ -13,6 +13,10 @@ const Container = styled.div`
 
   display: flex;
   flex-flow: column nowrap;
+
+  & .task__form {
+    margin-top: 7px;
+  }
 `;
 
 const Task = ({ task, index, setState }) => {
@@ -43,7 +47,7 @@ const Task = ({ task, index, setState }) => {
         >
           {task.content}
           {hasInput && (
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} className="task__form">
               <input {...inputHook}></input>
               {/* <select>
                 <option value="grapefruit">Grapefruit</option>

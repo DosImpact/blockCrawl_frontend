@@ -11,9 +11,11 @@ const globalStyles = createGlobalStyle`
         box-sizing:border-box;
     }
     body{
-        font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        font-size:12px;
-        background-color:whitesmoke;
+        font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size:14px;
+        font-weight:400;
+        background-color:white;
         color: #42505C;
         padding-top:60px;
         margin:20px;

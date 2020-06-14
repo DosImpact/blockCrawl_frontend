@@ -48,10 +48,11 @@ const Header = styled.header`
   left: 0;
   background-color: ${(props) => props.theme.lightGrayColor};
   color: ${(props) => props.theme.darkColor};
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
 
   .listItem__Header {
+    font-weight: 900;
     font-size: 20px;
     text-transform: uppercase;
   }
