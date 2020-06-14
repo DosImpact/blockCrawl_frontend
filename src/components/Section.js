@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const SectionContainer = styled.div`
-  background-color: ${(props) => props.theme.grayColor};
+  background-color: ${(props) => props.theme.lightGrayColor};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,9 +10,9 @@ const SectionContainer = styled.div`
   font-size: 15px;
   transition: all 0.5s ease-in-out;
   :hover {
-    border: 3px solid ${(props) => props.theme.pupleColor};
+    border: 3px solid ${(props) => props.theme.lightMintColor};
     .Section__Name {
-      border-bottom: 3px solid ${(props) => props.theme.pupleColor};
+      border-bottom: 3px solid ${(props) => props.theme.lightMintColor};
     }
   }
   .Section__Name {

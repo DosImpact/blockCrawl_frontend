@@ -6,7 +6,7 @@ const Container = styled.button`
   color: white;
   background-color: ${(props) => props.theme.lightPupleColor};
   border-radius: 4px;
-  width: 50px;
+  width: 70px;
   height: 20px;
   cursor: pointer;
   :hover {

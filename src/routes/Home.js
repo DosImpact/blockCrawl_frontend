@@ -48,8 +48,8 @@ const SListItem = styled.li`
   font-size: 20px;
   cursor: pointer;
   margin: 10px;
-  color: blue;
+  color: ${(props) => props.theme.pupleColor};
   :hover {
-    color: purple;
+    color: ${(props) => props.theme.MintColor};
   }
 `;

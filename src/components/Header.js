@@ -8,9 +8,7 @@ export default withRouter(({ location: { pathname } }) => (
     <List className="Header__List">
       <ListItem>
         <div className="listItem__Header">
-          <span>🎨</span>
           <span>Block Crwal</span>
-          <span>🎈</span>
         </div>
       </ListItem>
       <ListItem>
@@ -54,14 +52,8 @@ const Header = styled.header`
   font-size: 14px;
 
   .listItem__Header {
-    height: 60px;
-    width: 100%;
-    background-color: ${(props) => props.theme.grayColor};
-    display: flex;
-    padding: 5px;
-    justify-content: space-between;
-    align-items: center;
     font-size: 20px;
+    text-transform: uppercase;
   }
   .listItem__New {
     display: flex;
