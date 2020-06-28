@@ -47,7 +47,12 @@ const Info = () => {
       <button onClick={() => setAction("selecting")}>selecting Mode</button>
       <button onClick={() => setAction("normal")}>normal Mode</button>
       <br />
-      <iframe src="http://localhost:4000/" height="1000px" width="80%"></iframe>
+      <iframe
+        title="Backend"
+        src="http://localhost:4000/"
+        height="1000px"
+        width="80%"
+      ></iframe>
     </InfoContainer>
   );
 };

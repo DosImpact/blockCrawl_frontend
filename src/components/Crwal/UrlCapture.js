@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useInput from "../../hooks/useInput";
 import Section from "../../components/Section";
 import styled from "styled-components";
@@ -35,7 +35,7 @@ export default () => {
   const handleGetImage = (src) => {
     console.log("handleGetImage", src);
     const downloaderTag = document.createElement("iframe");
-    const BASE_URL = "http://localhost:4000/download/";
+    // const BASE_URL = "http://localhost:4000/download/";
     downloaderTag.src = src;
     downloaderTag.style.display = "none";
     console.log("donwload start...", src);
@@ -55,6 +55,7 @@ export default () => {
         {data ? (
           <>
             <img
+              alt="result_img"
               src={`${SERVER_URI}${data?.urlCapture}`}
               //src={"http://localhost:4000/Instagram_1590330674608.png"}
               width="400px"

@@ -7,13 +7,13 @@ const Name = ["NurlTag", "UrlTag", "urlCapture", "urlPDF"];
 const ListItem = ({ name, event }) => {
   return (
     <SListItem onClick={event}>
-      <a>{name}</a>
+      <span>{name}</span>
     </SListItem>
   );
 };
 
 const Home = () => {
-  const [selection, setSelection] = useState(3);
+  const [selection, setSelection] = useState(0);
 
   return (
     <HomeContainer>
@@ -29,8 +29,8 @@ const Home = () => {
       </List>
       {selection === 0 && <NurlTag />}
       {selection === 1 && <UrlTag />}
-      {selection == 2 && <UrlCapture />}
-      {selection == 3 && <UrlPDF />}
+      {selection === 2 && <UrlCapture />}
+      {selection === 3 && <UrlPDF />}
     </HomeContainer>
   );
 };

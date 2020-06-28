@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
-import { useLazyQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+
 import init_data from "./init_data";
 
 import Column from "./Column";

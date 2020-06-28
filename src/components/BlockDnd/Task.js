@@ -76,8 +76,16 @@ const renderState = (columnId, task) => {
   if (columnId === "column-2") {
     return (
       <>
-        {task.result.loading && <span>loading....🔎</span>}
-        {!task.result.loading && task.result.completed && <span>✅</span>}
+        {task.result.loading && (
+          <span role="img" aria-label="loading...">
+            loading....🔎
+          </span>
+        )}
+        {!task.result.loading && task.result.completed && (
+          <span role="img" aria-label="completed">
+            ✅
+          </span>
+        )}
         {!task.result.loading && task.result.completed && task.result.data && (
           <span>{JSON.stringify(task.result.data)}</span>
         )}

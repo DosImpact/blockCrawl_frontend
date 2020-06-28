@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useInput from "../../hooks/useInput";
 import Section from "../../components/Section";
 import styled from "styled-components";

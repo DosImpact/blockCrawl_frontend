@@ -19,7 +19,7 @@ const Block = ({ children, type, component }) => {
 };
 
 const DragableItem = ({ children, type, component }) => {
-  const [{ onDrag, test }, drag] = useDrag({
+  const [{ onDrag }, drag] = useDrag({
     item: { type },
     collect: (monitor) => ({
       onDrag: !!monitor.isDragging(),
@@ -122,7 +122,6 @@ const DropZone = ({ children }) => {
 };
 
 const Board = () => {
-  const [dropZoneCnt, setDropZoneCnt] = useState(5);
   const squres = [];
   for (let i = 0; i < 10; i++) {
     squres.push(renderSqure());

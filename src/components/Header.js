@@ -19,22 +19,46 @@ export default withRouter(({ location: { pathname } }) => (
         </div>
       </ListItem>
       <ListItem current={pathname === "/" ? true : false}>
-        <SLink to={{ pathname: "/" }}>📄 DashBoard</SLink>
+        <SLink to={{ pathname: "/" }}>
+          <span role="img" aria-label="emojies">
+            📄 DashBoard
+          </span>
+        </SLink>
       </ListItem>
       <ListItem current={pathname === "/info" ? true : false}>
-        <SLink to={{ pathname: "/info" }}>🌊 Quick Filters</SLink>
+        <SLink to={{ pathname: "/info" }}>
+          <span role="img" aria-label="emojies">
+            🌊 Quick Filters
+          </span>
+        </SLink>
       </ListItem>
       <ListItem current={pathname === "/block" ? true : false}>
-        <SLink to={{ pathname: "/block" }}>⌛️ block Tasks</SLink>
+        <SLink to={{ pathname: "/block" }}>
+          <span role="img" aria-label="emojies">
+            ⌛️ block Tasks
+          </span>
+        </SLink>
       </ListItem>
       <ListItem current={pathname === "/team" ? true : false}>
-        <SLink to={{ pathname: "/team" }}>🏰 Team Collaborations</SLink>
+        <SLink to={{ pathname: "/team" }}>
+          <span role="img" aria-label="emojies">
+            🏰 Team Collaborations
+          </span>
+        </SLink>
       </ListItem>
       <ListItem current={pathname === "/DataService" ? true : false}>
-        <SLink to={{ pathname: "/dataservice" }}>📊 Data Service</SLink>
+        <SLink to={{ pathname: "/dataservice" }}>
+          <span role="img" aria-label="emojies">
+            📊 Data Service
+          </span>
+        </SLink>
       </ListItem>
       <ListItem current={pathname === "/Contact" ? true : false}>
-        <SLink to={{ pathname: "/contact" }}>📱 Contact Us</SLink>
+        <SLink to={{ pathname: "/contact" }}>
+          <span role="img" aria-label="emojies">
+            📱 Contact Us
+          </span>
+        </SLink>
       </ListItem>
     </List>
   </Header>

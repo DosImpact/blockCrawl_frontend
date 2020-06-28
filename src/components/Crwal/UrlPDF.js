@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useInput from "../../hooks/useInput";
 import Section from "../../components/Section";
 import styled from "styled-components";
@@ -36,7 +36,7 @@ export default () => {
   const handleGetFile = (src) => {
     console.log("handleGetFile", src);
     const downloaderTag = document.createElement("iframe");
-    const BASE_URL = "http://localhost:4000/download/";
+    // const BASE_URL = "http://localhost:4000/download/";
     downloaderTag.src = src;
     downloaderTag.style.display = "none";
     console.log("donwload start...", src);

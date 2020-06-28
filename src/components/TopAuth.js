@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 
 import Input from "../components/Input";
 import LabelBox from "../components/Box";
@@ -35,20 +33,8 @@ const From = styled(Box)`
   }
 `;
 
-const StateChanger = styled(Box)`
-  height: 100%;
-`;
-
-const QUERY = gql`
-  query {
-    isLoggedIn @client
-  }
-`;
-
 const TopAuth = () => {
-  const [action, setAction] = useState("logout");
-  //const { data } = useQuery(QUERY);
-  //console.log(data);
+  const [action] = useState("logout");
   return (
     <Wrapper>
       {action === "logout" ? (
