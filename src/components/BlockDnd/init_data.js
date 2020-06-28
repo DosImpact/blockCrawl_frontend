@@ -7,6 +7,7 @@ const basicFormat = {
   result: { error: null, loading: false, data: null, completed: false },
   value: "",
 };
+
 const makeDeepCopy = () => {
   return JSON.parse(JSON.stringify(basicFormat));
 };

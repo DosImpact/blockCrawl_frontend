@@ -44,7 +44,7 @@ const Column = ({ tasks, column, setState }) => {
             {tasks.map((task, idx) => (
               <Task
                 columnId={column.id}
-                key={task.id}
+                key={task?.id || "task-X"}
                 task={task}
                 index={idx}
                 setState={setState}

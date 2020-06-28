@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
-
+import { toast } from "react-toastify";
 import init_data from "./init_data";
 
 import Column from "./Column";
@@ -308,6 +308,11 @@ const App = () => {
         }
       }
       q.shift();
+    }
+    if (q.length === 0) {
+      toast.success("Logic Compile Sucess!");
+    } else {
+      toast.error("Logic Compile Fail");
     }
   };
 
