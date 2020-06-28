@@ -233,7 +233,52 @@ const App = () => {
         });
       }
     };
+    const GetPDF = async (key, value) => {
+      if (currentURL === "") {
+        setState((prev) => {
+          prev.tasks[key].result.error = "No URL";
+          return { ...prev };
+        });
+        return "No URL";
+      }
+      // loading state로 변환
+      setState((prev) => {
+        prev.tasks[key].result.loading = true;
+        return { ...prev };
+      });
 
+      try {
+        console.log("currentURL", currentURL);
+        const {
+          data: {
+            data: { urlPDF: data },
+          },
+          status,
+        } = await CrwalingAPI.urlPDFAPI({
+          url: currentURL,
+        });
+
+        if (status === 200) {
+          setState((prev) => {
+            prev.tasks[key].result.data = data;
+            return { ...prev };
+          });
+        } else {
+          throw Error("status not 200");
+        }
+      } catch (error) {
+        setState((prev) => {
+          prev.tasks[key].result.error = true;
+          return { ...prev };
+        });
+      } finally {
+        setState((prev) => {
+          prev.tasks[key].result.loading = false;
+          prev.tasks[key].result.completed = true;
+          return { ...prev };
+        });
+      }
+    };
     while (q.length !== 0) {
       const key = q[0];
       const { id, content, input, value, isFetch } = state.tasks[key];
@@ -254,6 +299,12 @@ const App = () => {
       //CASE - page에서 이미지 가져와야 하는 경우
       if (isFetch && content === "Get IMG") {
         if (await GetIMG(key, value)) {
+          break;
+        }
+      }
+      //CASE - page에서 이미지 가져와야 하는 경우
+      if (isFetch && content === "Get PDF") {
+        if (await GetPDF(key, value)) {
           break;
         }
       }
