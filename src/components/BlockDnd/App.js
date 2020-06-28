@@ -205,12 +205,11 @@ const App = () => {
         console.log("currentURL", currentURL);
         const {
           data: {
-            data: { urlTag: data },
+            data: { urlCapture: data },
           },
           status,
-        } = await CrwalingAPI.urlTagAPI({
+        } = await CrwalingAPI.urlCaptureAPI({
           url: currentURL,
-          tag: value,
         });
 
         if (status === 200) {

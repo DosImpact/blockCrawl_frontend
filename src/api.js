@@ -18,12 +18,12 @@ export const CrwalingAPI = {
   urlCaptureAPI: ({ url }) =>
     axios({
       ...config,
-      data: urlTagAPIData({ url }),
+      data: urlCaptureAPIData({ url }),
     }),
   urlPDFAPI: ({ url }) =>
     axios({
       ...config,
-      data: urlTagAPIData({ url }),
+      data: urlPDFAPIData({ url }),
     }),
 };
 
