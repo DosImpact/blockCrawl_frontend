@@ -124,34 +124,116 @@ const App = () => {
     }
   };
 
-  // const getCode = (content, args) => {
-  //   if (args[0] === "") {
-  //     return null;
-  //   }
-  //   if (content === "Go To Page") return `await page.goto(${args[0]});`;
-  //   if (content === "Get Selector") {
-  //     return `
-  //     let text;
-  //     text =  await page.evaluate(
-  //     ({ ${args[0]} }) => {
-  //       const tagNode = document.querySelector(${args[0]});
-  //       if (tagNode) {
-  //         return tagNode.textContent;
-  //       }
-  //     },
-  //     { ${args[0]} }
-  //   );
-  //   result = text.trim();`;
-  //   }
-  //   return null;
-  // };
-
   const compileStart = async () => {
     console.log("compileStart");
     // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
     let q = Array.from(state.columns["column-2"].tasksId);
     let currentURL = "";
     console.log("now q:", q);
+
+    const GoToPage = (key, value) => {
+      currentURL = value;
+      setState((prev) => {
+        prev.tasks[key].result.loading = false;
+        prev.tasks[key].result.completed = true;
+        return { ...prev };
+      });
+    };
+
+    const GetSelector = async (key, value) => {
+      if (currentURL === "") {
+        setState((prev) => {
+          prev.tasks[key].result.error = "No URL";
+          return { ...prev };
+        });
+        return "No URL";
+      }
+      // loading state로 변환
+      setState((prev) => {
+        prev.tasks[key].result.loading = true;
+        return { ...prev };
+      });
+
+      try {
+        console.log("currentURL", currentURL);
+        const {
+          data: {
+            data: { urlTag: data },
+          },
+          status,
+        } = await CrwalingAPI.urlTagAPI({
+          url: currentURL,
+          tag: value,
+        });
+
+        if (status === 200) {
+          setState((prev) => {
+            prev.tasks[key].result.data = data;
+            return { ...prev };
+          });
+        } else {
+          throw Error("status not 200");
+        }
+      } catch (error) {
+        setState((prev) => {
+          prev.tasks[key].result.error = true;
+          return { ...prev };
+        });
+      } finally {
+        setState((prev) => {
+          prev.tasks[key].result.loading = false;
+          prev.tasks[key].result.completed = true;
+          return { ...prev };
+        });
+      }
+    };
+    const GetIMG = async (key, value) => {
+      if (currentURL === "") {
+        setState((prev) => {
+          prev.tasks[key].result.error = "No URL";
+          return { ...prev };
+        });
+        return "No URL";
+      }
+      // loading state로 변환
+      setState((prev) => {
+        prev.tasks[key].result.loading = true;
+        return { ...prev };
+      });
+
+      try {
+        console.log("currentURL", currentURL);
+        const {
+          data: {
+            data: { urlTag: data },
+          },
+          status,
+        } = await CrwalingAPI.urlTagAPI({
+          url: currentURL,
+          tag: value,
+        });
+
+        if (status === 200) {
+          setState((prev) => {
+            prev.tasks[key].result.data = data;
+            return { ...prev };
+          });
+        } else {
+          throw Error("status not 200");
+        }
+      } catch (error) {
+        setState((prev) => {
+          prev.tasks[key].result.error = true;
+          return { ...prev };
+        });
+      } finally {
+        setState((prev) => {
+          prev.tasks[key].result.loading = false;
+          prev.tasks[key].result.completed = true;
+          return { ...prev };
+        });
+      }
+    };
 
     while (q.length !== 0) {
       const key = q[0];
@@ -160,55 +242,20 @@ const App = () => {
 
       // CASE - 페이지 url을 변경한다.
       if (content === "Go To Page") {
-        currentURL = value;
-        setState((prev) => {
-          prev.tasks[key].result.loading = false;
-          prev.tasks[key].result.completed = true;
-          return { ...prev };
-        });
+        if (GoToPage(key, value)) {
+          break;
+        }
       }
-      //CASE - 셀렉터를 변경하고, data fetching을 진행한다.
+      //CASE - page에서 Selector를 가져와야 하는 경우  : 셀렉터를 변경하고, data fetching을 진행한다.
       if (isFetch && content === "Get Selector") {
-        // loading state로 변환
-        setState((prev) => {
-          console.log("1차", prev.tasks[key].result);
-          prev.tasks[key].result.loading = true;
-          return { ...prev };
-        });
-
-        try {
-          const {
-            data: {
-              data: { urlTag: data },
-            },
-            status,
-          } = await CrwalingAPI.urlTagAPI({
-            url: currentURL,
-            tag: value,
-          });
-
-          if (status === 200) {
-            setState((prev) => {
-              console.log("2차", prev.tasks[key].result);
-              prev.tasks[key].result.data = data;
-              return { ...prev };
-            });
-          } else {
-            throw Error("status not 200");
-          }
-        } catch (error) {
-          setState((prev) => {
-            console.log("3차", prev.tasks[key].result);
-            prev.tasks[key].result.error = true;
-            return { ...prev };
-          });
-        } finally {
-          setState((prev) => {
-            console.log("4차", prev.tasks[key].result);
-            prev.tasks[key].result.loading = false;
-            prev.tasks[key].result.completed = true;
-            return { ...prev };
-          });
+        if (await GetSelector(key, value)) {
+          break;
+        }
+      }
+      //CASE - page에서 이미지 가져와야 하는 경우
+      if (isFetch && content === "Get IMG") {
+        if (await GetIMG(key, value)) {
+          break;
         }
       }
       q.shift();

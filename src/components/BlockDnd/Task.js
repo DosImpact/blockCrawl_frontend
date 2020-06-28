@@ -14,8 +14,13 @@ const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
 
+  transition: 0.2s all ease-in-out;
   & .task__form {
     margin-top: 7px;
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.lightPupleColor};
+    color: ${(props) => props.theme.WhiteColor};
   }
 `;
 

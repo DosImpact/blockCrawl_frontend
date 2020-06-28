@@ -8,6 +8,25 @@ const config = {
   },
 };
 
+export const CrwalingAPI = {
+  urlTagAPI: ({ url, tag }) =>
+    axios({
+      ...config,
+      data: urlTagAPIData({ url, tag }),
+    }),
+
+  urlCaptureAPI: ({ url }) =>
+    axios({
+      ...config,
+      data: urlTagAPIData({ url }),
+    }),
+  urlPDFAPI: ({ url }) =>
+    axios({
+      ...config,
+      data: urlTagAPIData({ url }),
+    }),
+};
+
 const urlTagAPIData = ({ url, tag }) => {
   return JSON.stringify({
     query: `query {
@@ -19,10 +38,19 @@ const urlTagAPIData = ({ url, tag }) => {
   });
 };
 
-export const CrwalingAPI = {
-  urlTagAPI: ({ url, tag }) =>
-    axios({
-      ...config,
-      data: urlTagAPIData({ url, tag }),
-    }),
+const urlCaptureAPIData = ({ url }) => {
+  return JSON.stringify({
+    query: `query{
+      urlCapture(url:"${url}")
+    }`,
+  });
+};
+
+const urlPDFAPIData = ({ url }) => {
+  return JSON.stringify({
+    query: `query{
+      urlPDF(url:"${url}")
+    }
+    `,
+  });
 };

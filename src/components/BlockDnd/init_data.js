@@ -1,44 +1,72 @@
+const basicFormat = {
+  id: "task-X",
+  content: "Free",
+  input: false,
+  inputType: null,
+  isFetch: false,
+  result: { error: null, loading: false, data: null, completed: false },
+  value: "",
+};
+const makeDeepCopy = () => {
+  return JSON.parse(JSON.stringify(basicFormat));
+};
+
 export default {
   tasks: {
-    "task-1": { id: "task-1", content: "if" },
-    "task-2": { id: "task-2", content: "if end" },
-    "task-3": { id: "task-3", content: "while" },
-    "task-4": { id: "task-4", content: "while end" },
+    "task-1": { ...makeDeepCopy(), id: "task-1", content: "if" },
+    "task-2": { ...makeDeepCopy(), id: "task-2", content: "if end" },
+    "task-3": { ...makeDeepCopy(), id: "task-3", content: "while" },
+    "task-4": { ...makeDeepCopy(), id: "task-4", content: "while end" },
     "task-5": {
+      ...makeDeepCopy(),
       id: "task-5",
       content: "Go To Page",
       input: true,
       isFetch: false,
-      result: { error: null, loading: false, data: null, completed: false },
-      value:
-        "https://github.com/atlassian/react-beautiful-dnd/blob/master/README.md#documentation-",
+      value: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321",
     },
     "task-6": {
+      ...makeDeepCopy(),
       id: "task-6",
       content: "Get Selector",
       input: true,
       isFetch: true,
-      result: { error: null, loading: false, data: null, completed: false },
-      value: "#readme > article > h1",
+      value:
+        "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
     },
-    "task-7": { id: "task-7", content: "Return Format", input: true },
-    "task-8": { id: "task-8", content: "Get PDF" },
-    "task-9": { id: "task-9", content: "Get IMG" },
+    "task-7": {
+      ...makeDeepCopy(),
+      id: "task-7",
+      content: "Return Format",
+      input: true,
+    },
+    "task-8": {
+      ...makeDeepCopy(),
+      id: "task-8",
+      content: "Get PDF",
+      isFetch: true,
+    },
+    "task-9": {
+      ...makeDeepCopy(),
+      id: "task-9",
+      content: "Get IMG",
+      isFetch: true,
+    },
     "task-10": {
+      ...makeDeepCopy(),
       id: "task-10",
       content: "Go To Page",
       input: true,
       isFetch: false,
-      result: { error: null, loading: false, data: null, completed: false },
       value:
         "https://github.com/atlassian/react-beautiful-dnd/blob/master/README.md#documentation-",
     },
     "task-11": {
+      ...makeDeepCopy(),
       id: "task-11",
       content: "Get Selector",
       input: true,
       isFetch: true,
-      result: { error: null, loading: false, data: null, completed: false },
       value: "#readme > article > h1",
     },
   },
