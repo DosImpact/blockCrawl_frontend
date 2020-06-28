@@ -7,9 +7,11 @@ export default withRouter(({ location: { pathname } }) => (
     {console.log(pathname)}
     <List className="Header__List">
       <ListItem>
-        <div className="listItem__Header">
-          <span>Block Crwal</span>
-        </div>
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/" }}>
+          <div className="listItem__Header">
+            <span>Block Crwal</span>
+          </div>
+        </SLink>
       </ListItem>
       <ListItem>
         <div className="listItem__New">
@@ -18,43 +20,59 @@ export default withRouter(({ location: { pathname } }) => (
           </div>
         </div>
       </ListItem>
-      <ListItem current={pathname === "/" ? true : false}>
-        <SLink to={{ pathname: "/" }}>
+      <ListItem
+        current={pathname === process.env.PUBLIC_URL + "/" ? true : false}
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/" }}>
           <span role="img" aria-label="emojies">
             📄 DashBoard
           </span>
         </SLink>
       </ListItem>
-      <ListItem current={pathname === "/info" ? true : false}>
-        <SLink to={{ pathname: "/info" }}>
+      <ListItem
+        current={pathname === process.env.PUBLIC_URL + "/info" ? true : false}
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/info" }}>
           <span role="img" aria-label="emojies">
             🌊 Quick Filters
           </span>
         </SLink>
       </ListItem>
-      <ListItem current={pathname === "/block" ? true : false}>
-        <SLink to={{ pathname: "/block" }}>
+      <ListItem
+        current={pathname === process.env.PUBLIC_URL + "/block" ? true : false}
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/block" }}>
           <span role="img" aria-label="emojies">
             ⌛️ block Tasks
           </span>
         </SLink>
       </ListItem>
-      <ListItem current={pathname === "/team" ? true : false}>
-        <SLink to={{ pathname: "/team" }}>
+      <ListItem
+        current={pathname === process.env.PUBLIC_URL + "/team" ? true : false}
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/team" }}>
           <span role="img" aria-label="emojies">
             🏰 Team Collaborations
           </span>
         </SLink>
       </ListItem>
-      <ListItem current={pathname === "/DataService" ? true : false}>
-        <SLink to={{ pathname: "/dataservice" }}>
+      <ListItem
+        current={
+          pathname === process.env.PUBLIC_URL + "/dataservice" ? true : false
+        }
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/dataservice" }}>
           <span role="img" aria-label="emojies">
             📊 Data Service
           </span>
         </SLink>
       </ListItem>
-      <ListItem current={pathname === "/Contact" ? true : false}>
-        <SLink to={{ pathname: "/contact" }}>
+      <ListItem
+        current={
+          pathname === process.env.PUBLIC_URL + "/contact" ? true : false
+        }
+      >
+        <SLink to={{ pathname: process.env.PUBLIC_URL + "/contact" }}>
           <span role="img" aria-label="emojies">
             📱 Contact Us
           </span>
