@@ -20,6 +20,7 @@
     "react-grid-layout": "^0.18.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-toastify": "^6.0.6",
     "styled-components": "^5.1.0",
     "styled-reset": "^4.1.4"
   },
