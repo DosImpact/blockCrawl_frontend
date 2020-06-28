@@ -58,8 +58,7 @@ export default {
       content: "Go To Page",
       input: true,
       isFetch: false,
-      value:
-        "https://github.com/atlassian/react-beautiful-dnd/blob/master/README.md#documentation-",
+      value: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=106360",
     },
     "task-11": {
       ...makeDeepCopy(),
@@ -67,7 +66,25 @@ export default {
       content: "Get Selector",
       input: true,
       isFetch: true,
-      value: "#readme > article > h1",
+      value:
+        "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
+    },
+    "task-12": {
+      ...makeDeepCopy(),
+      id: "task-12",
+      content: "Go To Page",
+      input: true,
+      isFetch: false,
+      value: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187351",
+    },
+    "task-13": {
+      ...makeDeepCopy(),
+      id: "task-13",
+      content: "Get Selector",
+      input: true,
+      isFetch: true,
+      value:
+        "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
     },
   },
   compiledCode: "",
@@ -92,7 +109,7 @@ export default {
     "column-2": {
       id: "column-2",
       title: "Logic💠",
-      tasksId: ["task-10", "task-11"],
+      tasksId: ["task-10", "task-11", "task-12", "task-13"],
     },
     "column-3": {
       id: "column-3",
