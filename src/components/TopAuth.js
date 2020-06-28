@@ -59,8 +59,8 @@ const TopAuth = () => {
               <Input />
               <LabelBox content={"비밀번호"} />
               <Input />
-              <Button text={"login"} />
-              <Button text={"SingUp"} />
+              <Button text={"Login"} />
+              <Button text={"SignUp"} />
             </form>
           </From>
         </>

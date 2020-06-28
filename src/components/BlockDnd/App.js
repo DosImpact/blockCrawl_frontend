@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
-
+import { useLazyQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import init_data from "./init_data";
 
 import Column from "./Column";
 
+import { CrwalingAPI } from "../../api";
+// data: urlTagAPIData({
+//   url: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321",
+//   tag:
+//     "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
+// }),
+
 const App = () => {
+  // const [
+  //   fetch_URL_TAG,
+  //   { data: URL_TAG_data, loading: URL_TAG_loading, refetch: URL_TAG_refetch },
+  // ] = useLazyQuery(URL_TAG);
   const [state, setState] = useState(init_data);
 
   const onDragStart = (start) => {
@@ -22,7 +34,7 @@ const App = () => {
     document.body.style.transition = "inherit";
 
     console.log("onDragEnd", result);
-    const { destination, draggableId, source } = result;
+    const { source, destination, draggableId } = result; // source => destination 으로 draggableId가 드래깅 되었다.
     if (!destination) {
       return;
     }
@@ -32,16 +44,14 @@ const App = () => {
     ) {
       return;
     }
-
+    // 변화전 Col,Idx => 변화 후 Col,Idx
     const startIdx = source.index;
     const endIdx = destination.index;
 
     const startCol = state.columns[source.droppableId];
     const endCol = state.columns[destination.droppableId];
-
+    //CASE: 하나의 column안에서 위치만 change
     if (destination.droppableId === source.droppableId) {
-      // 하나의 column안에서 위치만 change
-
       const nowCol = startCol;
       nowCol.tasksId.splice(startIdx, 1);
       nowCol.tasksId.splice(endIdx, 0, draggableId);
@@ -55,9 +65,12 @@ const App = () => {
       }));
       return;
     }
+    //CASE: Palette로 드랍 옮기기
     if (destination.droppableId === "column-1") {
+      // columns -> tasksId 정렬
       startCol.tasksId.splice(startIdx, 1);
       endCol.tasksId.splice(endIdx, 0, draggableId);
+      // columns  정렬 update
       setState((prev) => ({
         ...prev,
         columns: {
@@ -68,7 +81,7 @@ const App = () => {
       }));
       return;
     }
-
+    //CASE: Logic으로 드랍 : Task의 복사
     if (destination.droppableId === "column-2") {
       const originTask = state.tasks[draggableId];
 
@@ -80,6 +93,7 @@ const App = () => {
       };
 
       endCol.tasksId.splice(endIdx, 0, id);
+      //바뀐정보 update- 새로운 task, 및 column 정렬
       setState((prev) => ({
         ...prev,
         tasks: {
@@ -93,8 +107,11 @@ const App = () => {
       }));
       return;
     }
+    //CASE: Trash Bin 드랍 : Task의 삭제
     if (destination.droppableId === "column-3") {
+      // column 정렬
       startCol.tasksId.splice(startIdx, 1);
+      // 업데이트 column 정렬
       setState((prev) => ({
         ...prev,
         columns: {
@@ -107,56 +124,94 @@ const App = () => {
     }
   };
 
-  const getCode = (content, args) => {
-    if (args[0] === "") {
-      return null;
-    }
-    if (content === "Go To Page") return `await page.goto(${args[0]});`;
-    if (content === "Get Selector") {
-      return `
-      let text;
-      text =  await page.evaluate(
-      ({ ${args[0]} }) => {
-        const tagNode = document.querySelector(${args[0]});
-        if (tagNode) {
-          return tagNode.textContent;
-        }
-      },
-      { ${args[0]} }
-    );
-    result = text.trim();`;
-    }
-    return null;
-  };
+  // const getCode = (content, args) => {
+  //   if (args[0] === "") {
+  //     return null;
+  //   }
+  //   if (content === "Go To Page") return `await page.goto(${args[0]});`;
+  //   if (content === "Get Selector") {
+  //     return `
+  //     let text;
+  //     text =  await page.evaluate(
+  //     ({ ${args[0]} }) => {
+  //       const tagNode = document.querySelector(${args[0]});
+  //       if (tagNode) {
+  //         return tagNode.textContent;
+  //       }
+  //     },
+  //     { ${args[0]} }
+  //   );
+  //   result = text.trim();`;
+  //   }
+  //   return null;
+  // };
 
-  const compileStart = () => {
+  const compileStart = async () => {
     console.log("compileStart");
-    try {
-      const targetCol = state.columns["column-2"];
-      const tasks = Array.from(targetCol.tasksId).map(
-        (id, idx) => state.tasks[id]
-      );
-      console.log(tasks);
-      let compiledCode = "";
-      tasks.map((task) => {
-        const code = getCode(task.content, [task?.value ?? ""]);
-        if (!code) {
-          throw Error("complie Error");
+    // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
+    let q = Array.from(state.columns["column-2"].tasksId);
+    let currentURL = "";
+    console.log("now q:", q);
+
+    while (q.length !== 0) {
+      const key = q[0];
+      const { id, content, input, value, isFetch } = state.tasks[key];
+      console.log(id, content, input, value, isFetch);
+
+      // CASE - 페이지 url을 변경한다.
+      if (content === "Go To Page") {
+        currentURL = value;
+        setState((prev) => {
+          prev.tasks[key].result.loading = false;
+          prev.tasks[key].result.completed = true;
+          return { ...prev };
+        });
+      }
+      //CASE - 셀렉터를 변경하고, data fetching을 진행한다.
+      if (isFetch && content === "Get Selector") {
+        // loading state로 변환
+        setState((prev) => {
+          console.log("1차", prev.tasks[key].result);
+          prev.tasks[key].result.loading = true;
+          return { ...prev };
+        });
+
+        try {
+          const {
+            data: {
+              data: { urlTag: data },
+            },
+            status,
+          } = await CrwalingAPI.urlTagAPI({
+            url: currentURL,
+            tag: value,
+          });
+
+          if (status === 200) {
+            setState((prev) => {
+              console.log("2차", prev.tasks[key].result);
+              prev.tasks[key].result.data = data;
+              return { ...prev };
+            });
+          } else {
+            throw Error("status not 200");
+          }
+        } catch (error) {
+          setState((prev) => {
+            console.log("3차", prev.tasks[key].result);
+            prev.tasks[key].result.error = true;
+            return { ...prev };
+          });
+        } finally {
+          setState((prev) => {
+            console.log("4차", prev.tasks[key].result);
+            prev.tasks[key].result.loading = false;
+            prev.tasks[key].result.completed = true;
+            return { ...prev };
+          });
         }
-        compiledCode += code;
-      });
-      setState((prev) => ({
-        ...prev,
-        compliedStatus: 1,
-        compiledCode,
-      }));
-      console.log("compile Success!");
-    } catch (error) {
-      setState((prev) => ({
-        ...prev,
-        compliedStatus: -1,
-      }));
-      console.log("compile fail!", error);
+      }
+      q.shift();
     }
   };
 
@@ -184,7 +239,7 @@ const App = () => {
       </Container>
       <ResultBox Status={state.compliedStatus}>
         <button onClick={compileStart}>Complie</button>
-        <h1>
+        {/* <h1>
           컴파일 결과{" "}
           <span role="img">
             {state.compliedStatus === 0
@@ -198,12 +253,16 @@ const App = () => {
         <hr></hr>
         {state.compiledCode.split("\n").map((s) => (
           <div>{s}</div>
-        ))}
+        ))} */}
       </ResultBox>
-      <div>{JSON.stringify(state)}</div>
+      <div style={{ fontSize: "20px" }}>{JSON.stringify(state.tasks)}</div>
+      <br />
+      <div style={{ fontSize: "20px" }}>{JSON.stringify(state.columns)}</div>
     </>
   );
 };
+
+export default App;
 
 const Container = styled.div`
   display: flex;
@@ -220,4 +279,9 @@ const ResultBox = styled.div`
       ? `${props.theme.lightRedColor}`
       : `${props.theme.lightGrayColor}`};
 `;
-export default App;
+
+// const URL_TAG = gql`
+//   query urlTagQuery($tag: String!, $url: String!) {
+//     urlTag(tag: $tag, url: $url)
+//   }
+// `;

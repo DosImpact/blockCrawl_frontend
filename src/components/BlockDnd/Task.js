@@ -19,7 +19,7 @@ const Container = styled.div`
   }
 `;
 
-const Task = ({ task, index, setState }) => {
+const Task = ({ columnId, task, index, setState }) => {
   const hasInput = task?.input ?? false;
   const inputHook = useInput(task.value);
 
@@ -57,6 +57,8 @@ const Task = ({ task, index, setState }) => {
               </select> */}
             </form>
           )}
+          <br />
+          {renderState(columnId, task)}
         </Container>
       )}
     </Draggable>
@@ -64,6 +66,23 @@ const Task = ({ task, index, setState }) => {
 };
 
 export default Task;
+
+const renderState = (columnId, task) => {
+  if (columnId === "column-2") {
+    return (
+      <>
+        {task.result.loading && <span>loading....🔎</span>}
+        {!task.result.loading && task.result.completed && <span>✅</span>}
+        {!task.result.loading && task.result.completed && task.result.data && (
+          <span>{JSON.stringify(task.result.data)}</span>
+        )}
+        {JSON.stringify(task.result)}
+      </>
+    );
+  } else {
+    return <></>;
+  }
+};
 
 const useInput = (init) => {
   const [value, setValue] = useState(init);

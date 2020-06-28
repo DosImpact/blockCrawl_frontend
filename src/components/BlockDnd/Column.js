@@ -10,7 +10,7 @@ const Container = styled.div`
   border-radius: 2px;
 
   min-width: 220px;
-  /* width: ${(props) => (props.columnId === "column-2" ? "100%" : "")}; */
+  width: ${(props) => (props.columnId === "column-2" ? "100%" : "")};
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -42,7 +42,13 @@ const Column = ({ tasks, column, setState }) => {
             {...provided.droppableProps}
           >
             {tasks.map((task, idx) => (
-              <Task key={task.id} task={task} index={idx} setState={setState} />
+              <Task
+                columnId={column.id}
+                key={task.id}
+                task={task}
+                index={idx}
+                setState={setState}
+              />
             ))}
             {provided.placeholder}
           </TaskList>

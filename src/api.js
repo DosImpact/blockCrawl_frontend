@@ -1,13 +1,28 @@
 import axios from "axios";
 
-// const params = {};
-
-const api = axios.create({
-  baseURL: "http://localhost:4000/api/",
-});
-
-export const CrwalingRestAPI = {
-  naverDust: () => api.get("start"),
+const config = {
+  method: "POST",
+  url: "http://localhost:4000/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 };
 
-//const res = await Axios.get("http://localhost:4000/api/start");
+const urlTagAPIData = ({ url, tag }) => {
+  return JSON.stringify({
+    query: `query {
+      urlTag(
+        tag: "${tag}"
+        url: "${url}"
+      )
+    }`,
+  });
+};
+
+export const CrwalingAPI = {
+  urlTagAPI: ({ url, tag }) =>
+    axios({
+      ...config,
+      data: urlTagAPIData({ url, tag }),
+    }),
+};

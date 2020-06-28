@@ -8,9 +8,19 @@ export default {
       id: "task-5",
       content: "Go To Page",
       input: true,
-      value: "",
+      isFetch: false,
+      result: { error: null, loading: false, data: null, completed: false },
+      value:
+        "https://github.com/atlassian/react-beautiful-dnd/blob/master/README.md#documentation-",
     },
-    "task-6": { id: "task-6", content: "Get Selector", input: true },
+    "task-6": {
+      id: "task-6",
+      content: "Get Selector",
+      input: true,
+      isFetch: true,
+      result: { error: null, loading: false, data: null, completed: false },
+      value: "#readme > article > h1",
+    },
     "task-7": { id: "task-7", content: "Return Format", input: true },
     "task-8": { id: "task-8", content: "Get PDF" },
     "task-9": { id: "task-9", content: "Get IMG" },
@@ -18,6 +28,8 @@ export default {
       id: "task-10",
       content: "Go To Page",
       input: true,
+      isFetch: false,
+      result: { error: null, loading: false, data: null, completed: false },
       value:
         "https://github.com/atlassian/react-beautiful-dnd/blob/master/README.md#documentation-",
     },
@@ -25,11 +37,14 @@ export default {
       id: "task-11",
       content: "Get Selector",
       input: true,
+      isFetch: true,
+      result: { error: null, loading: false, data: null, completed: false },
       value: "#readme > article > h1",
     },
   },
   compiledCode: "",
   compliedStatus: 0,
+  // columns에 대한 정보 및 task과의 관계
   columns: {
     "column-1": {
       id: "column-1",
@@ -57,5 +72,5 @@ export default {
       tasksId: [],
     },
   },
-  columnOrder: ["column-1", "column-2", "column-3"],
+  columnOrder: ["column-1", "column-2", "column-3"], // column랜더링 순서
 };
