@@ -9,7 +9,7 @@ export default withRouter(({ location: { pathname } }) => (
       <ListItem>
         <SLink to={{ pathname: process.env.PUBLIC_URL + "/" }}>
           <div className="listItem__Header">
-            <span>Block Crwal</span>
+            <span>Block Crawl</span>
           </div>
         </SLink>
       </ListItem>
