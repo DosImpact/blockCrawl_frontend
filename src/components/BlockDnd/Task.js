@@ -3,14 +3,34 @@ import styled from "styled-components";
 
 import { Draggable } from "react-beautiful-dnd";
 
+const makeTaskColor = (name, theme) => {
+  switch (name) {
+    case "if":
+      return "#c9ffff";
+    case "if end":
+      return theme.lightGreenColor;
+    case "Go To Page":
+      return theme.lightBlueColor;
+    case "Get Selector":
+      return theme.lightOrangeColor;
+    case "Return Format":
+      return theme.lightGrayColor;
+    case "Get PDF":
+      return theme.lightGreenColor;
+    case "Get IMG":
+      return theme.lightGreenColor;
+    default:
+      return theme.whiteColor;
+  }
+};
+
 const Container = styled.div`
   border: 1px solid lightgray;
   padding: 8px;
   display: flex;
   height: 100px;
 
-  background: white;
-
+  background: ${(props) => makeTaskColor(props.name, props.theme)};
   display: flex;
   flex-flow: column nowrap;
 
@@ -20,7 +40,6 @@ const Container = styled.div`
   }
   &:hover {
     background-color: ${(props) => props.theme.lightPupleColor};
-    color: ${(props) => props.theme.WhiteColor};
   }
 `;
 
@@ -46,6 +65,7 @@ const Task = ({ columnId, task, index, setState }) => {
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
+          name={task.content}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

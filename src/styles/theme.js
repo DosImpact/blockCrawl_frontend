@@ -1,7 +1,21 @@
 export default {
   bgColor: "#FFFFFF",
-
+  // Pastel Color
+  PastelYellow: "#FFFCDC",
+  PastelOrange: "#FDEFDC",
+  PastelRed: "#FDEEEE",
+  PastelBlue: "#EBF3FC",
+  PastelPurple: "#F6EDF4",
+  PastelPink: "#FEEFF6",
+  PastelPowderBlue: "#EAF6FE",
+  PastelMint: "#E9F4F2",
+  PastelGreen: "#ECF5ED",
+  PastelGrey: "#EFEFEF",
+  PastelBrown: "#F4EAE4",
+  PastelLime: "#F7F8DA",
+  // Main color
   whiteColor: "#FFFFFF",
+  WhiteColor: "#FFFFFF",
 
   greenColor: "#00b894",
   lightGreenColor: "#55efc4",
