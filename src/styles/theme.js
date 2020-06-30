@@ -1,16 +1,16 @@
 export default {
   bgColor: "#FFFFFF",
 
-  WhiteColor: "#FFFFFF",
+  whiteColor: "#FFFFFF",
 
-  RedColor: "#e84393",
-  lightRedColor: "#fd79a8",
-
-  GreenColor: "#00b894",
+  greenColor: "#00b894",
   lightGreenColor: "#55efc4",
 
-  MintColor: "#81ecec",
+  mintColor: "#81ecec",
   lightMintColor: "#81ecec",
+
+  blueColor: "#0984e3",
+  lightBlueColor: "#74b9ff",
 
   pupleColor: "#6c5ce7",
   lightPupleColor: "#a29bfe",
@@ -19,7 +19,20 @@ export default {
   grayColor: "#b2bec3",
   lightGrayColor: "#dfe6e9",
 
-  darkColor: "#2d3436",
+  yellowColor: "#fdcb6e",
+  lightYelloColor: "#ffeaa7",
 
+  orangeColor: "#e17055",
+  lightOrangeColor: "#fab1a0",
+
+  redColor: "#d63031",
+  lightRedColor: "#ff7675",
+
+  pinkColor: "#e84393",
+  lightPinkColor: "#fd79a8",
+
+  lightDarkColor: "#636e72",
+  darkColor: "#2d3436",
+  // SIZE
   listSize: "60px",
 };
