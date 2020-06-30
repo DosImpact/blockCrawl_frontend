@@ -2,50 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Draggable } from "react-beautiful-dnd";
-
-const makeTaskColor = (name, theme) => {
-  switch (name) {
-    case "if":
-      return theme.PastelYellow;
-    case "if end":
-      return theme.PastelYellow;
-    case "while":
-      return theme.PastelOrange;
-    case "while end":
-      return theme.PastelOrange;
-    case "Go To Page":
-      return theme.PastelRed;
-    case "Get Selector":
-      return theme.PastelBlue;
-    case "Return Format":
-      return theme.PastelPurple;
-    case "Get PDF":
-      return theme.PastelMint;
-    case "Get IMG":
-      return theme.PastelGreen;
-    default:
-      return theme.whiteColor;
-  }
-};
-
-const Container = styled.div`
-  border: 1px solid lightgray;
-  padding: 8px;
-  display: flex;
-  height: 100px;
-
-  background: ${(props) => makeTaskColor(props.name, props.theme)};
-  display: flex;
-  flex-flow: column nowrap;
-
-  transition: 0.2s all ease-in-out;
-  & .task__form {
-    margin-top: 7px;
-  }
-  &:hover {
-    background-color: ${(props) => props.theme.lightPupleColor};
-  }
-`;
+import { SERVER_URI } from "../../config/key";
 
 const Task = ({ columnId, task, index, setState }) => {
   const hasInput = task?.input ?? false;
@@ -76,15 +33,17 @@ const Task = ({ columnId, task, index, setState }) => {
         >
           {task.content}
           {hasInput && (
-            <form onSubmit={onSubmit} className="task__form">
-              <input {...inputHook}></input>
-              {/* <select>
+            <>
+              <form onSubmit={onSubmit} className="task__form">
+                <input className="Task__Input" {...inputHook}></input>
+                {/* <select>
                 <option value="grapefruit">Grapefruit</option>
                 <option value="lime">Lime</option>
                 <option value="coconut">Coconut</option>
                 <option value="mango">Mango</option>
               </select> */}
-            </form>
+              </form>
+            </>
           )}
           <br />
           {renderState(columnId, task)}
@@ -105,6 +64,11 @@ const renderState = (columnId, task) => {
             loading....🔎
           </span>
         )}
+        {!task.result.loading && task.result.error && (
+          <span role="img" aria-label="completed">
+            ❌
+          </span>
+        )}
         {!task.result.loading && task.result.completed && (
           <span role="img" aria-label="completed">
             ✅
@@ -113,6 +77,17 @@ const renderState = (columnId, task) => {
         {!task.result.loading && task.result.completed && task.result.data && (
           <span>{JSON.stringify(task.result.data)}</span>
         )}
+        {task.content === "Get IMG" &&
+          !task.result.loading &&
+          task.result.completed && (
+            <img
+              alt="result_img"
+              src={`${SERVER_URI}${task.result?.data}`}
+              //src={"http://localhost:4000/Instagram_1590330674608.png"}
+              width="400px"
+              height="200px"
+            />
+          )}
         {JSON.stringify(task.result)}
       </>
     );
@@ -130,3 +105,50 @@ const useInput = (init) => {
   };
   return { value, onChange };
 };
+
+const makeTaskColor = (name, theme) => {
+  switch (name) {
+    case "if":
+      return theme.PastelYellow;
+    case "if end":
+      return theme.PastelYellow;
+    case "while":
+      return theme.PastelOrange;
+    case "while end":
+      return theme.PastelOrange;
+    case "Go To Page":
+      return theme.PastelRed;
+    case "Get Selector":
+      return theme.PastelBlue;
+    case "Return Format":
+      return theme.PastelPurple;
+    case "Get PDF":
+      return theme.PastelMint;
+    case "Get IMG":
+      return theme.PastelGreen;
+    default:
+      return theme.whiteColor;
+  }
+};
+
+const Container = styled.div`
+  border: 1px solid lightgray;
+  padding: 8px;
+  display: flex;
+  min-height: 100px;
+
+  background: ${(props) => makeTaskColor(props.name, props.theme)};
+  display: flex;
+  flex-flow: column nowrap;
+
+  transition: 0.2s all ease-in-out;
+  & .task__form {
+    margin-top: 7px;
+  }
+  & .Task__Input {
+    width: 100%;
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.lightPupleColor};
+  }
+`;

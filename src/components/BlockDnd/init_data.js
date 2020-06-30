@@ -76,7 +76,7 @@ export default {
       content: "Go To Page",
       input: true,
       isFetch: false,
-      value: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187351",
+      value: "https://github.com/",
     },
     "task-13": {
       ...makeDeepCopy(),
@@ -85,7 +85,13 @@ export default {
       input: true,
       isFetch: true,
       value:
-        "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
+        "body > div.application-main > main > div.py-6.py-sm-8.jumbotron-codelines > div > div > div.col-md-7.text-center.text-md-left > h1",
+    },
+    "task-14": {
+      ...makeDeepCopy(),
+      id: "task-14",
+      content: "Get IMG",
+      isFetch: true,
     },
   },
   compiledCode: "",

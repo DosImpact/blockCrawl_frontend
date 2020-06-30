@@ -175,6 +175,7 @@ const App = () => {
 
         if (status === 200) {
           setState((prev) => {
+            prev.tasks[key].result.error = null;
             prev.tasks[key].result.data = data;
             return { ...prev };
           });
@@ -222,6 +223,7 @@ const App = () => {
 
         if (status === 200) {
           setState((prev) => {
+            prev.tasks[key].result.error = null;
             prev.tasks[key].result.data = data;
             return { ...prev };
           });
@@ -268,6 +270,7 @@ const App = () => {
 
         if (status === 200) {
           setState((prev) => {
+            prev.tasks[key].result.error = null;
             prev.tasks[key].result.data = data;
             return { ...prev };
           });
@@ -348,7 +351,13 @@ const App = () => {
         <div className="ResultBox__column">
           <Button
             className="ResultBox__Button"
-            text="Complie"
+            text={
+              state.compliedStatus === -1
+                ? "Complie"
+                : state.compliedStatus === 0
+                ? "Complie ✔"
+                : "Complie ❌"
+            }
             onClick={compileStart}
           />
           <Button
@@ -405,7 +414,7 @@ const ResultBox = styled.div`
 
   & .ResultBox__Button {
     min-width: 80px;
-    min-height: 50px;
+    min-height: 40px;
     margin: 4px;
     font-size: 16px;
     font-weight: 200;
