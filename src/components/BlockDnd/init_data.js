@@ -89,7 +89,7 @@ export default {
     },
   },
   compiledCode: "",
-  compliedStatus: 0,
+  compliedStatus: -1,
   // columns에 대한 정보 및 task과의 관계
   columns: {
     "column-1": {

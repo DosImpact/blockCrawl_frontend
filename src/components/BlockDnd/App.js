@@ -124,6 +124,13 @@ const App = () => {
     }
   };
 
+  const stateInitalize = () => {
+    // TODO : why ERROR
+    return;
+    setState(() => {
+      return { ...init_data };
+    });
+  };
   const compileStart = async () => {
     console.log("compileStart");
     // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
@@ -187,6 +194,7 @@ const App = () => {
         });
       }
     };
+
     const GetIMG = async (key, value) => {
       if (currentURL === "") {
         setState((prev) => {
@@ -279,6 +287,7 @@ const App = () => {
         });
       }
     };
+
     while (q.length !== 0) {
       const key = q[0];
       const { id, content, input, value, isFetch } = state.tasks[key];
@@ -312,8 +321,16 @@ const App = () => {
     }
     if (q.length === 0) {
       toast.success("Logic Compile Sucess!");
+      setState((prev) => {
+        prev.compliedStatus = 0;
+        return { ...prev };
+      });
     } else {
       toast.error("Logic Compile Fail");
+      setState((prev) => {
+        prev.compliedStatus = 1;
+        return { ...prev };
+      });
     }
   };
 
@@ -334,6 +351,12 @@ const App = () => {
             text="Complie"
             onClick={compileStart}
           />
+          <Button
+            className="ResultBox__Button"
+            text="Reset"
+            onClick={stateInitalize}
+          />
+          <Button className="ResultBox__Button" text="Save" />
         </div>
       </ResultBox>
       <Container>
