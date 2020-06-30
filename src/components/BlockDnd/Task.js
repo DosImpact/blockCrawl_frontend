@@ -6,19 +6,23 @@ import { Draggable } from "react-beautiful-dnd";
 const makeTaskColor = (name, theme) => {
   switch (name) {
     case "if":
-      return "#c9ffff";
+      return theme.PastelYellow;
     case "if end":
-      return theme.lightGreenColor;
+      return theme.PastelYellow;
+    case "while":
+      return theme.PastelOrange;
+    case "while end":
+      return theme.PastelOrange;
     case "Go To Page":
-      return theme.lightBlueColor;
+      return theme.PastelRed;
     case "Get Selector":
-      return theme.lightOrangeColor;
+      return theme.PastelBlue;
     case "Return Format":
-      return theme.lightGrayColor;
+      return theme.PastelPurple;
     case "Get PDF":
-      return theme.lightGreenColor;
+      return theme.PastelMint;
     case "Get IMG":
-      return theme.lightGreenColor;
+      return theme.PastelGreen;
     default:
       return theme.whiteColor;
   }

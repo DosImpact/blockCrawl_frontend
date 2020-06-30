@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import init_data from "./init_data";
 
 import Column from "./Column";
+import Button from "../../components/Button";
 
 import { CrwalingAPI } from "../../api";
 // data: urlTagAPIData({
@@ -317,7 +318,24 @@ const App = () => {
   };
 
   return (
-    <>
+    <Wrapper>
+      <ResultBox Status={state.compliedStatus}>
+        <div className="ResultBox__column">
+          <Button className="ResultBox__Button" text="File" />
+          <Button className="ResultBox__Button" text="Edit" />
+          <Button className="ResultBox__Button" text="Selection" />
+          <Button className="ResultBox__Button" text="View" />
+          <Button className="ResultBox__Button" text="Go" />
+          <Button className="ResultBox__Button" text="Help" />
+        </div>
+        <div className="ResultBox__column">
+          <Button
+            className="ResultBox__Button"
+            text="Complie"
+            onClick={compileStart}
+          />
+        </div>
+      </ResultBox>
       <Container>
         <DragDropContext
           onDragEnd={onDragEnd}
@@ -338,47 +356,37 @@ const App = () => {
           })}
         </DragDropContext>
       </Container>
-      <ResultBox Status={state.compliedStatus}>
-        <button onClick={compileStart}>Complie</button>
-        {/* <h1>
-          컴파일 결과{" "}
-          <span role="img">
-            {state.compliedStatus === 0
-              ? "🧶"
-              : state.compliedStatus === 1
-              ? "✅"
-              : "❌"}
-          </span>
-        </h1>
-        {JSON.stringify(state.compiledCode)}
-        <hr></hr>
-        {state.compiledCode.split("\n").map((s) => (
-          <div>{s}</div>
-        ))} */}
-      </ResultBox>
       <div style={{ fontSize: "20px" }}>{JSON.stringify(state.tasks)}</div>
       <br />
       <div style={{ fontSize: "20px" }}>{JSON.stringify(state.columns)}</div>
-    </>
+    </Wrapper>
   );
 };
 
 export default App;
 
+const Wrapper = styled.div``;
 const Container = styled.div`
   display: flex;
 `;
 
 const ResultBox = styled.div`
   width: 100%;
-  min-height: 200px;
+  min-height: 100px;
   font-size: 20px;
-  background-color: ${(props) =>
-    props.Status === 1
-      ? `${props.theme.MintColor}`
-      : props.Status === -1
-      ? `${props.theme.lightRedColor}`
-      : `${props.theme.lightGrayColor}`};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & .ResultBox__column {
+  }
+
+  & .ResultBox__Button {
+    min-width: 80px;
+    min-height: 50px;
+    margin: 4px;
+    font-size: 16px;
+    font-weight: 200;
+  }
 `;
 
 // const URL_TAG = gql`
