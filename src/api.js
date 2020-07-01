@@ -1,8 +1,9 @@
 import axios from "axios";
+import key from "./config/key";
 
 const config = {
   method: "POST",
-  url: "http://localhost:4000/",
+  url: key.SERVER_URI,
   headers: {
     "Content-Type": "application/json",
   },

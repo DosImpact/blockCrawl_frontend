@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
-import { SERVER_URI } from "../../config/key";
+import key from "../../config/key";
 
 const N_URL_TAG = gql`
   query urlCaptureQuery($url: String!) {
@@ -56,7 +56,7 @@ export default () => {
           <>
             <img
               alt="result_img"
-              src={`${SERVER_URI}${data?.urlCapture}`}
+              src={`${key.SERVER_URI}${data?.urlCapture}`}
               //src={"http://localhost:4000/Instagram_1590330674608.png"}
               width="400px"
               height="200px"
@@ -65,7 +65,7 @@ export default () => {
               text={"GET IMAGE"}
               className="urlcapture__summit"
               onClick={() =>
-                handleGetImage(`${SERVER_URI}download/${data?.urlCapture}`)
+                handleGetImage(`${key.SERVER_URI}download/${data?.urlCapture}`)
               }
             />
           </>

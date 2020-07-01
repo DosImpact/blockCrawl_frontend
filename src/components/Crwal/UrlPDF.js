@@ -9,7 +9,7 @@ import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 import Loader from "../Loader";
 
-import { SERVER_URI } from "../../config/key";
+import key from "../../config/key";
 
 const N_URL_TAG = gql`
   query urlPDFQuery($url: String!) {
@@ -58,7 +58,7 @@ export default () => {
               text={"GET PDF"}
               className="urlcapture__summit"
               onClick={() =>
-                handleGetFile(`${SERVER_URI}download/${data?.urlPDF}`)
+                handleGetFile(`${key.SERVER_URI}download/${data?.urlPDF}`)
               }
             />
           </>

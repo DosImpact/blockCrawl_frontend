@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Draggable } from "react-beautiful-dnd";
-import { SERVER_URI } from "../../config/key";
+import key from "../../config/key";
 
 const Task = ({ columnId, task, index, setState }) => {
   const hasInput = task?.input ?? false;
@@ -82,7 +82,7 @@ const renderState = (columnId, task) => {
           task.result.completed && (
             <img
               alt="result_img"
-              src={`${SERVER_URI}${task.result?.data}`}
+              src={`${key.SERVER_URI}${task.result?.data}`}
               //src={"http://localhost:4000/Instagram_1590330674608.png"}
               width="400px"
               height="200px"

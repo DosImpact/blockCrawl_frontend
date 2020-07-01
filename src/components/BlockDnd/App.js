@@ -127,9 +127,9 @@ const App = () => {
   const stateInitalize = () => {
     // TODO : why ERROR
     return;
-    setState(() => {
-      return { ...init_data };
-    });
+    // setState(() => {
+    //   return { ...init_data };
+    // });
   };
   const compileStart = async () => {
     console.log("compileStart");

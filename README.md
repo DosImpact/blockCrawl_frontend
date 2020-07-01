@@ -13,6 +13,9 @@
 # yarn start
 
 - 서버를 실행합니다.(Dev)
+
+# yarn deploy
+- gh-pages에 베포합니다.
 ```
 
 # require env
