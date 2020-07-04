@@ -4,6 +4,10 @@
 
 [https://dosimpact.github.io/blockCrawl_frontend/](https://dosimpact.github.io/blockCrawl_frontend/)
 
+- Toast Cloud WAS
+
+[http://133.186.241.220/blockCrawl_frontend/](http://133.186.241.220/blockCrawl_frontend/)
+
 # install
 
 ```
