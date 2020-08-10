@@ -21,4 +21,6 @@ export const LOG_TYPES = {
 // Block
 // ======================
 
-export const BLOCK_TYPES = {};
+export const BLOCK_TYPES = {
+  BLOCK_COMPLIE: "BLOCK_COMPLIE",
+};

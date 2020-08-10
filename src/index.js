@@ -4,7 +4,9 @@ import App from "./App";
 import { ApolloProvider } from "@apollo/react-hooks";
 import Client from "./Apollo/Client";
 
-import { Map, List } from "immutable";
+import InitData from "./components/BlockDnd/InitData";
+
+console.log(InitData.toJS());
 
 ReactDOM.render(
   <React.StrictMode>

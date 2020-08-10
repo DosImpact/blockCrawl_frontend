@@ -1,30 +1,23 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { DragDropContext } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
 import init_data from "./init_data";
-
-import Column from "./Column";
-import Button from "../../components/Button";
+import InitData from "./InitData";
 
 import { CrwalingAPI } from "../../api";
-// data: urlTagAPIData({
-//   url: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=187321",
-//   tag:
-//     "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
-// }),
+
+import AppPresenter from "./AppPresenter";
 
 const App = () => {
   // const [
   //   fetch_URL_TAG,
   //   { data: URL_TAG_data, loading: URL_TAG_loading, refetch: URL_TAG_refetch },
   // ] = useLazyQuery(URL_TAG);
-  const [state, setState] = useState(init_data);
+  const [state, setState] = useState(InitData);
 
   const onDragStart = (start) => {
-    console.log("onDragStart", start);
-    document.body.style.transition = "all 0.2s ease";
-    document.body.style.color = "#a29bfe";
+    // console.log("onDragStart", start);
+    // document.body.style.transition = "all 0.2s ease";
+    // document.body.style.color = "#a29bfe";
   };
   const onDragUpdate = (result) => {
     // console.log("onDragUpdate", result);
@@ -35,9 +28,9 @@ const App = () => {
 
     console.log("onDragEnd", result);
     const { source, destination, draggableId } = result; // source => destination 으로 draggableId가 드래깅 되었다.
-    if (!destination) {
-      return;
-    }
+    // dropzone 밖
+    if (!destination) return;
+    // 같은 위치로 드랍
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -48,89 +41,42 @@ const App = () => {
     const startIdx = source.index;
     const endIdx = destination.index;
 
-    const startCol = state.columns[source.droppableId];
-    const endCol = state.columns[destination.droppableId];
+    const startCol = state.toJS().columns[source.droppableId];
+    const endCol = state.toJS().columns[destination.droppableId];
     //CASE: 하나의 column안에서 위치만 change
     if (destination.droppableId === source.droppableId) {
-      const nowCol = startCol;
-      nowCol.tasksId.splice(startIdx, 1);
-      nowCol.tasksId.splice(endIdx, 0, draggableId);
+      const columnID = destination.droppableId;
+      setState((prev) =>
+        prev.updateIn(["columns", columnID, "tasksId"], (pdata) =>
+          pdata.splice(startIdx, 1).splice(endIdx, 0, draggableId)
+        )
+      );
+      return;
+    }
 
-      setState((prev) => ({
-        ...prev,
-        columns: {
-          ...prev.columns,
-          [nowCol.id]: nowCol,
-        },
-      }));
-      return;
-    }
-    //CASE: Palette로 드랍 옮기기
-    if (destination.droppableId === "column-1") {
-      // columns -> tasksId 정렬
-      startCol.tasksId.splice(startIdx, 1);
-      endCol.tasksId.splice(endIdx, 0, draggableId);
-      // columns  정렬 update
-      setState((prev) => ({
-        ...prev,
-        columns: {
-          ...prev.columns,
-          [startCol.id]: startCol,
-          [endCol.id]: endCol,
-        },
-      }));
-      return;
-    }
-    //CASE: Logic으로 드랍 : Task의 복사
     if (destination.droppableId === "column-2") {
-      const originTask = state.tasks[draggableId];
-
+      const originTask = state.toJS().tasks[draggableId];
       const id = `task-${Date.now()}`;
-      const cloneTask = {
-        ...originTask,
-        id,
-        content: `${originTask.content}`,
-      };
-
-      endCol.tasksId.splice(endIdx, 0, id);
-      //바뀐정보 update- 새로운 task, 및 column 정렬
-      setState((prev) => ({
-        ...prev,
-        tasks: {
-          ...prev.tasks,
-          [cloneTask.id]: cloneTask,
-        },
-        columns: {
-          ...prev.columns,
-          [endCol.id]: endCol,
-        },
-      }));
+      setState((prev) =>
+        prev
+          .setIn(["tasks", id], { ...originTask, id })
+          .updateIn(["columns", endCol.id, "tasksId"], (pdata) =>
+            pdata.splice(endIdx, 0, id)
+          )
+      );
       return;
     }
     //CASE: Trash Bin 드랍 : Task의 삭제
     if (destination.droppableId === "column-3") {
-      // column 정렬
-      startCol.tasksId.splice(startIdx, 1);
-      // 업데이트 column 정렬
-      setState((prev) => ({
-        ...prev,
-        columns: {
-          ...prev.columns,
-          [startCol.id]: startCol,
-          [endCol.id]: endCol,
-        },
-      }));
+      setState((prev) =>
+        prev.deleteIn(["columns", startCol.id, "tasksId"], (pdata) =>
+          pdata.splice(startIdx, 1)
+        )
+      );
       return;
     }
   };
 
-  const stateInitalize = () => {
-    // TODO : why ERROR
-    return;
-    // setState(() => {
-    //   return { ...init_data };
-    // });
-  };
   const compileStart = async () => {
     console.log("compileStart");
     // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
@@ -338,91 +284,15 @@ const App = () => {
   };
 
   return (
-    <Wrapper>
-      <ResultBox Status={state.compliedStatus}>
-        <div className="ResultBox__column">
-          <Button className="ResultBox__Button" text="File" />
-          <Button className="ResultBox__Button" text="Edit" />
-          <Button className="ResultBox__Button" text="Selection" />
-          <Button className="ResultBox__Button" text="View" />
-          <Button className="ResultBox__Button" text="Go" />
-          <Button className="ResultBox__Button" text="Help" />
-        </div>
-        <div className="ResultBox__column">
-          <Button
-            className="ResultBox__Button"
-            text={
-              state.compliedStatus === -1
-                ? "Complie"
-                : state.compliedStatus === 0
-                ? "Complie ✔"
-                : "Complie ❌"
-            }
-            onClick={compileStart}
-          />
-          <Button
-            className="ResultBox__Button"
-            text="Reset"
-            onClick={stateInitalize}
-          />
-          <Button className="ResultBox__Button" text="Save" />
-        </div>
-      </ResultBox>
-      <Container>
-        <DragDropContext
-          onDragEnd={onDragEnd}
-          onDragStart={onDragStart}
-          onDragUpdate={onDragUpdate}
-        >
-          {state.columnOrder.map((columnId, idx) => {
-            const column = state.columns[columnId];
-            const tasks = column.tasksId.map((id) => state.tasks[id]);
-            return (
-              <Column
-                tasks={tasks}
-                column={column}
-                key={idx}
-                setState={setState}
-              />
-            );
-          })}
-        </DragDropContext>
-      </Container>
-      <div style={{ fontSize: "20px" }}>{JSON.stringify(state.tasks)}</div>
-      <br />
-      <div style={{ fontSize: "20px" }}>{JSON.stringify(state.columns)}</div>
-    </Wrapper>
+    <AppPresenter
+      state={state.toJS()}
+      setState={setState}
+      compileStart={() => console.log("complie")}
+      onDragEnd={onDragEnd}
+      onDragStart={onDragStart}
+      onDragUpdate={onDragUpdate}
+    />
   );
 };
 
 export default App;
-
-const Wrapper = styled.div``;
-const Container = styled.div`
-  display: flex;
-`;
-
-const ResultBox = styled.div`
-  width: 100%;
-  min-height: 100px;
-  font-size: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  & .ResultBox__column {
-  }
-
-  & .ResultBox__Button {
-    min-width: 80px;
-    min-height: 40px;
-    margin: 4px;
-    font-size: 16px;
-    font-weight: 200;
-  }
-`;
-
-// const URL_TAG = gql`
-//   query urlTagQuery($tag: String!, $url: String!) {
-//     urlTag(tag: $tag, url: $url)
-//   }
-// `;
