@@ -60,10 +60,16 @@ const AppPresenter = ({
         </DragDropContext>
       </Container>
       <div style={{ fontSize: "20px" }}>
-        {JSON.stringify(state.tasks, null, 2)}
+        <pre>{JSON.stringify(state.columns, null, 2)}</pre>
       </div>
-      <br />
-      <div style={{ fontSize: "20px" }}>{JSON.stringify(state.columns)}</div>
+      <hr />
+      <div style={{ fontSize: "20px" }}>
+        <pre>{JSON.stringify(state.columnOrder, null, 2)}</pre>
+      </div>
+      <hr />
+      <div style={{ fontSize: "20px" }}>
+        <pre>{JSON.stringify(state.tasks, null, 2)}</pre>
+      </div>
     </Wrapper>
   );
 };

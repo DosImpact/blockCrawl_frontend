@@ -7,6 +7,234 @@ import { CrwalingAPI } from "../../api";
 
 import AppPresenter from "./AppPresenter";
 
+const compileStart = async (state, setState) => {
+  console.log("compileStart");
+  // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
+  let q = Array.from(state.toJS().columns["column-2"].tasksId);
+  console.log("tasks", q);
+  let currentURL = "";
+  console.log("now q:", q);
+
+  const GoToPage = (key, value) => {
+    currentURL = value;
+    setState((prev) => {
+      return prev
+        .setIn(["tasks", key, "result", "loading"], false)
+        .setIn(["tasks", key, "result", "completed"], true);
+      // prev.tasks[key].result.loading = false;
+      // prev.tasks[key].result.completed = true;
+      // return { ...prev };
+    });
+  };
+
+  const GetSelector = async (key, value) => {
+    if (currentURL === "") {
+      setState((prev) => {
+        return prev.setIn(["tasks", key, "result", "error"], "No URL");
+        // prev.tasks[key].result.error = "No URL";
+        // return { ...prev };
+      });
+      return "No URL";
+    }
+    // loading state로 변환
+    setState((prev) => {
+      return prev.setIn(["tasks", key, "result", "loading"], true);
+      // prev.tasks[key].result.loading = true;
+      // return { ...prev };
+    });
+
+    try {
+      console.log("currentURL", currentURL);
+      const {
+        data: {
+          data: { urlTag: data },
+        },
+        status,
+      } = await CrwalingAPI.urlTagAPI({
+        url: currentURL,
+        tag: value,
+      });
+
+      if (status === 200) {
+        setState((prev) => {
+          return prev
+            .setIn(["tasks", key, "result", "error"], null)
+            .setIn(["tasks", key, "result", "data"], data);
+          // prev.tasks[key].result.error = null;
+          // prev.tasks[key].result.data = data;
+          // return { ...prev };
+        });
+      } else {
+        throw Error("status not 200");
+      }
+    } catch (error) {
+      setState((prev) => {
+        return prev.setIn(["tasks", key, "result", "error"], true);
+        // prev.tasks[key].result.error = true;
+        // return { ...prev };
+      });
+    } finally {
+      setState((prev) => {
+        return prev
+          .setIn(["tasks", key, "result", "loading"], false)
+          .setIn(["tasks", key, "result", "completed"], true);
+        // prev.tasks[key].result.loading = false;
+        // prev.tasks[key].result.completed = true;
+        // return { ...prev };
+      });
+    }
+  };
+
+  const GetIMG = async (key, value) => {
+    if (currentURL === "") {
+      setState((prev) => {
+        return prev.setIn(["tasks", key, "result", "error"], "No URL");
+        // prev.tasks[key].result.error = "No URL";
+        // return { ...prev };
+      });
+      return "No URL";
+    }
+    // loading state로 변환
+    setState((prev) => {
+      return prev.setIn(["tasks", key, "result", "loading"], true);
+      // prev.tasks[key].result.loading = true;
+      // return { ...prev };
+    });
+
+    try {
+      console.log("currentURL", currentURL);
+      const {
+        data: {
+          data: { urlCapture: data },
+        },
+        status,
+      } = await CrwalingAPI.urlCaptureAPI({
+        url: currentURL,
+      });
+
+      if (status === 200) {
+        setState((prev) => {
+          return prev
+            .setIn(["tasks", key, "result", "error"], null)
+            .setIn(["tasks", key, "result", "data"], data);
+          // prev.tasks[key].result.error = null;
+          // prev.tasks[key].result.data = data;
+          // return { ...prev };
+        });
+      } else {
+        throw Error("status not 200");
+      }
+    } catch (error) {
+      setState((prev) => {
+        return prev.setIn(["tasks", key, "result", "error"], true);
+      });
+    } finally {
+      setState((prev) => {
+        return prev
+          .setIn(["tasks", key, "result", "loading"], false)
+          .setIn(["tasks", key, "result", "completed"], true);
+        // prev.tasks[key].result.loading = false;
+        // prev.tasks[key].result.completed = true;
+        // return { ...prev };
+      });
+    }
+  };
+  const GetPDF = async (key, value) => {
+    if (currentURL === "") {
+      setState((prev) => {
+        prev.tasks[key].result.error = "No URL";
+        return { ...prev };
+      });
+      return "No URL";
+    }
+    // loading state로 변환
+    setState((prev) => {
+      prev.tasks[key].result.loading = true;
+      return { ...prev };
+    });
+
+    try {
+      console.log("currentURL", currentURL);
+      const {
+        data: {
+          data: { urlPDF: data },
+        },
+        status,
+      } = await CrwalingAPI.urlPDFAPI({
+        url: currentURL,
+      });
+
+      if (status === 200) {
+        setState((prev) => {
+          return prev
+            .setIn(["tasks", key, "result", "error"], null)
+            .setIn(["tasks", key, "result", "data"], data);
+        });
+      } else {
+        throw Error("status not 200");
+      }
+    } catch (error) {
+      setState((prev) => {
+        return prev.setIn(["tasks", key, "result", "error"], true);
+        // prev.tasks[key].result.error = true;
+        // return { ...prev };
+      });
+    } finally {
+      setState((prev) => {
+        return prev
+          .setIn(["tasks", key, "result", "loading"], false)
+          .setIn(["tasks", key, "result", "completed"], true);
+        // prev.tasks[key].result.loading = false;
+        // prev.tasks[key].result.completed = true;
+        // return { ...prev };
+      });
+    }
+  };
+
+  while (q.length !== 0) {
+    const key = q[0];
+    const { id, content, input, value, isFetch } = state.toJS().tasks[key];
+    console.log(id, content, input, value, isFetch);
+
+    // CASE - 페이지 url을 변경한다.
+    if (content === "Go To Page") {
+      if (GoToPage(key, value)) {
+        break;
+      }
+    }
+    //CASE - page에서 Selector를 가져와야 하는 경우  : 셀렉터를 변경하고, data fetching을 진행한다.
+    if (isFetch && content === "Get Selector") {
+      if (await GetSelector(key, value)) {
+        break;
+      }
+    }
+    //CASE - page에서 이미지 가져와야 하는 경우
+    if (isFetch && content === "Get IMG") {
+      if (await GetIMG(key, value)) {
+        break;
+      }
+    }
+    //CASE - page에서 이미지 가져와야 하는 경우
+    if (isFetch && content === "Get PDF") {
+      if (await GetPDF(key, value)) {
+        break;
+      }
+    }
+    q.shift();
+  }
+  if (q.length === 0) {
+    toast.success("Logic Compile Sucess!");
+    setState((prev) => {
+      return prev.setIn(["compliedStatus"], 0);
+    });
+  } else {
+    toast.error("Logic Compile Fail");
+    setState((prev) => {
+      return prev.setIn(["compliedStatus"], 1);
+    });
+  }
+};
+
 const App = () => {
   // const [
   //   fetch_URL_TAG,
@@ -76,218 +304,15 @@ const App = () => {
       return;
     }
   };
-
-  const compileStart = async () => {
-    console.log("compileStart");
-    // 우선 logic컬럼의 task들을 q에 넣고 , q가 반복문을 한 바퀴 돌자.
-    let q = Array.from(state.columns["column-2"].tasksId);
-    let currentURL = "";
-    console.log("now q:", q);
-
-    const GoToPage = (key, value) => {
-      currentURL = value;
-      setState((prev) => {
-        prev.tasks[key].result.loading = false;
-        prev.tasks[key].result.completed = true;
-        return { ...prev };
-      });
-    };
-
-    const GetSelector = async (key, value) => {
-      if (currentURL === "") {
-        setState((prev) => {
-          prev.tasks[key].result.error = "No URL";
-          return { ...prev };
-        });
-        return "No URL";
-      }
-      // loading state로 변환
-      setState((prev) => {
-        prev.tasks[key].result.loading = true;
-        return { ...prev };
-      });
-
-      try {
-        console.log("currentURL", currentURL);
-        const {
-          data: {
-            data: { urlTag: data },
-          },
-          status,
-        } = await CrwalingAPI.urlTagAPI({
-          url: currentURL,
-          tag: value,
-        });
-
-        if (status === 200) {
-          setState((prev) => {
-            prev.tasks[key].result.error = null;
-            prev.tasks[key].result.data = data;
-            return { ...prev };
-          });
-        } else {
-          throw Error("status not 200");
-        }
-      } catch (error) {
-        setState((prev) => {
-          prev.tasks[key].result.error = true;
-          return { ...prev };
-        });
-      } finally {
-        setState((prev) => {
-          prev.tasks[key].result.loading = false;
-          prev.tasks[key].result.completed = true;
-          return { ...prev };
-        });
-      }
-    };
-
-    const GetIMG = async (key, value) => {
-      if (currentURL === "") {
-        setState((prev) => {
-          prev.tasks[key].result.error = "No URL";
-          return { ...prev };
-        });
-        return "No URL";
-      }
-      // loading state로 변환
-      setState((prev) => {
-        prev.tasks[key].result.loading = true;
-        return { ...prev };
-      });
-
-      try {
-        console.log("currentURL", currentURL);
-        const {
-          data: {
-            data: { urlCapture: data },
-          },
-          status,
-        } = await CrwalingAPI.urlCaptureAPI({
-          url: currentURL,
-        });
-
-        if (status === 200) {
-          setState((prev) => {
-            prev.tasks[key].result.error = null;
-            prev.tasks[key].result.data = data;
-            return { ...prev };
-          });
-        } else {
-          throw Error("status not 200");
-        }
-      } catch (error) {
-        setState((prev) => {
-          prev.tasks[key].result.error = true;
-          return { ...prev };
-        });
-      } finally {
-        setState((prev) => {
-          prev.tasks[key].result.loading = false;
-          prev.tasks[key].result.completed = true;
-          return { ...prev };
-        });
-      }
-    };
-    const GetPDF = async (key, value) => {
-      if (currentURL === "") {
-        setState((prev) => {
-          prev.tasks[key].result.error = "No URL";
-          return { ...prev };
-        });
-        return "No URL";
-      }
-      // loading state로 변환
-      setState((prev) => {
-        prev.tasks[key].result.loading = true;
-        return { ...prev };
-      });
-
-      try {
-        console.log("currentURL", currentURL);
-        const {
-          data: {
-            data: { urlPDF: data },
-          },
-          status,
-        } = await CrwalingAPI.urlPDFAPI({
-          url: currentURL,
-        });
-
-        if (status === 200) {
-          setState((prev) => {
-            prev.tasks[key].result.error = null;
-            prev.tasks[key].result.data = data;
-            return { ...prev };
-          });
-        } else {
-          throw Error("status not 200");
-        }
-      } catch (error) {
-        setState((prev) => {
-          prev.tasks[key].result.error = true;
-          return { ...prev };
-        });
-      } finally {
-        setState((prev) => {
-          prev.tasks[key].result.loading = false;
-          prev.tasks[key].result.completed = true;
-          return { ...prev };
-        });
-      }
-    };
-
-    while (q.length !== 0) {
-      const key = q[0];
-      const { id, content, input, value, isFetch } = state.tasks[key];
-      console.log(id, content, input, value, isFetch);
-
-      // CASE - 페이지 url을 변경한다.
-      if (content === "Go To Page") {
-        if (GoToPage(key, value)) {
-          break;
-        }
-      }
-      //CASE - page에서 Selector를 가져와야 하는 경우  : 셀렉터를 변경하고, data fetching을 진행한다.
-      if (isFetch && content === "Get Selector") {
-        if (await GetSelector(key, value)) {
-          break;
-        }
-      }
-      //CASE - page에서 이미지 가져와야 하는 경우
-      if (isFetch && content === "Get IMG") {
-        if (await GetIMG(key, value)) {
-          break;
-        }
-      }
-      //CASE - page에서 이미지 가져와야 하는 경우
-      if (isFetch && content === "Get PDF") {
-        if (await GetPDF(key, value)) {
-          break;
-        }
-      }
-      q.shift();
-    }
-    if (q.length === 0) {
-      toast.success("Logic Compile Sucess!");
-      setState((prev) => {
-        prev.compliedStatus = 0;
-        return { ...prev };
-      });
-    } else {
-      toast.error("Logic Compile Fail");
-      setState((prev) => {
-        prev.compliedStatus = 1;
-        return { ...prev };
-      });
-    }
+  const complie = () => {
+    compileStart(state, setState);
   };
 
   return (
     <AppPresenter
       state={state.toJS()}
       setState={setState}
-      compileStart={() => console.log("complie")}
+      compileStart={complie}
       onDragEnd={onDragEnd}
       onDragStart={onDragStart}
       onDragUpdate={onDragUpdate}
