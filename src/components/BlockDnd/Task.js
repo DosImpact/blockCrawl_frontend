@@ -11,16 +11,9 @@ const Task = ({ columnId, task, index, setState }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log("onSubmit", inputHook.value);
-    setState((prev) => ({
-      ...prev,
-      tasks: {
-        ...prev.tasks,
-        [task.id]: {
-          ...prev.tasks[task.id],
-          value: inputHook.value,
-        },
-      },
-    }));
+    setState((prev) =>
+      prev.setIn(["tasks", task.id, "value"], inputHook.value)
+    );
   };
   return (
     <Draggable draggableId={task.id} index={index}>
@@ -35,7 +28,11 @@ const Task = ({ columnId, task, index, setState }) => {
           {hasInput && (
             <>
               <form onSubmit={onSubmit} className="task__form">
-                <input className="Task__Input" {...inputHook}></input>
+                <input
+                  onChange={onSubmit}
+                  className="Task__Input"
+                  {...inputHook}
+                ></input>
                 {/* <select>
                 <option value="grapefruit">Grapefruit</option>
                 <option value="lime">Lime</option>
