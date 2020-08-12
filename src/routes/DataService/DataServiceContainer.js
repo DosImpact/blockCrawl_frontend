@@ -6,7 +6,9 @@ import InputForm from "./InputForm";
 
 const initData = Map({
   commonTags: List([]),
+  tagCounter: 2,
   urls: List([]),
+  urlCounter: 1,
 });
 
 function DataServiceContainer() {
@@ -14,9 +16,7 @@ function DataServiceContainer() {
   // toast.dark("DataServiceContainer is not available");
   return (
     <>
-      <h1> N ULR > N Tag </h1>
       <InputForm state={state.toJS()} setState={setState} />
-      <h1> N ULR > N Tag RESULT </h1>
       <DataServicePresenter />
     </>
   );
