@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import init_data from "./init_data";
 import InitData from "./InitData";
 
 import { CrwalingAPI } from "../../api";

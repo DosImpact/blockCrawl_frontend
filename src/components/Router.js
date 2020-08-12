@@ -6,7 +6,7 @@ import Block from "../routes/Block";
 import Team from "../routes/Team";
 import Info from "../routes/Info";
 import Contact from "../routes/Contact";
-import DataService from "../routes/DataService";
+import DataService from "../routes/DataService/index";
 import TopAuth from "./TopAuth";
 
 export default () => {
