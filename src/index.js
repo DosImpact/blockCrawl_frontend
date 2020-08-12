@@ -9,10 +9,8 @@ import InitData from "./components/BlockDnd/InitData";
 console.log(InitData.toJS());
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={Client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+  <ApolloProvider client={Client}>
+    <App />
+  </ApolloProvider>,
   document.getElementById("root")
 );

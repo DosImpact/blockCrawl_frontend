@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import DataServicePresenter from "./DataServicePresenter";
-import { TextField, Button, Checkbox, Radio } from "@material-ui/core";
-import { Map, List } from "immutable";
 import InputForm from "./InputForm";
-
-const initData = Map({
-  commonTags: List([]),
-  tagCounter: 2,
-  urls: List([]),
-  urlCounter: 1,
-});
+import initData from "./InitData";
 
 function DataServiceContainer() {
   const [state, setState] = useState(initData);

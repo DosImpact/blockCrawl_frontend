@@ -92,6 +92,7 @@ const Header = styled.header`
   color: ${(props) => props.theme.darkColor};
   font-weight: 500;
   font-size: 14px;
+  z-index: 200;
 
   .listItem__Header {
     font-weight: 900;
