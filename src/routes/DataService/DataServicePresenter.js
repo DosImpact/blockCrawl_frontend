@@ -30,7 +30,7 @@ for (let i = 0; i < 200; i += 1) {
 
 function DataServicePresenter() {
   return (
-    <Paper style={{ height: 400, width: "100%" }}>
+    <Paper style={{ height: 800, width: "100%" }}>
       <VirtualizedTable
         rowCount={rows.length}
         rowGetter={({ index }) => rows[index]}
