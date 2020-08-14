@@ -12,7 +12,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router />
         <GlobalStyles />
-        <ToastContainer position={"bottom-left"} />
+        <ToastContainer position={"top-right"} />
       </ThemeProvider>
     </>
   );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as R from "ramda";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -13,6 +12,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+
+import { toast } from "react-toastify";
 
 import { useFormik } from "formik";
 
@@ -125,7 +126,7 @@ export default function InputForm({
   startCompile,
 }) {
   const classes = useStyles();
-  const { commonTags, tagCounter, urls, urlCounter } = state;
+  const { tagCounter, urlCounter } = state;
 
   const [urlsText, setUrlsText] = useState(sampleData);
   const initialValues = state.commonTags.reduce((store, tag, idx) => {
@@ -155,10 +156,16 @@ export default function InputForm({
     handleUpdateUrls();
   };
   const handleReset = () => {
+    toast.dark("리셋 완료.");
     handleResetData();
   };
   const handleStartTest = () => {
+    toast.dark("데이터 수집을 시작합니다.");
     startCompile();
+  };
+
+  const handleCSVOutput = () => {
+    toast.dark("엑셀로 변환합니다.");
   };
 
   const handleUpdateUrls = () => {
@@ -178,6 +185,7 @@ export default function InputForm({
     );
   };
   const handleUpdateTags = () => {
+    toast.dark("태그 업데이트 완료");
     // const nodes = document.querySelectorAll("tagTextField");
     // console.log(nodes);
   };
@@ -194,20 +202,6 @@ export default function InputForm({
               <TableCell>현재 urls 수 :{urlCounter}</TableCell>
               <TableCell>현재 tags 수 :{tagCounter}</TableCell>
               <TableCell>
-                <Button
-                  onClick={handleAddTagCounter}
-                  className={classes.button}
-                >
-                  태그 추가하기
-                </Button>
-
-                <Button
-                  style={{ marginLeft: "20px" }}
-                  onClick={handleStartTest}
-                  className={classes.buttonSucces}
-                >
-                  테스트 하기
-                </Button>
                 <Button
                   style={{ marginLeft: "20px" }}
                   onClick={handleReset}
@@ -240,15 +234,33 @@ export default function InputForm({
               <TagsInput classes={classes} formik={formik} />
               <TableRow>
                 <TableCell>
-                  <Button type="submit" className={classes.button}>
+                  <Button
+                    onClick={handleAddTagCounter}
+                    className={classes.button}
+                  >
+                    태그 추가하기
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "20px" }}
+                    onClick={handleUpdateTags}
+                    type="submit"
+                    className={classes.button}
+                  >
                     태그 적용하기
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "20px" }}
                     onClick={handleStartTest}
                     className={classes.buttonSucces}
                   >
                     테스트 하기
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "20px" }}
+                    onClick={handleCSVOutput}
+                    className={classes.buttonSucces}
+                  >
+                    엑셀로 저장
                   </Button>
                 </TableCell>
               </TableRow>

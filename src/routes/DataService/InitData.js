@@ -72,7 +72,7 @@ export default Map({
     "https://movie.naver.com/movie/bi/mi/basic.nhn?code=185151",
     "https://movie.naver.com/movie/bi/mi/basic.nhn?code=10323",
   ]),
-  urlCounter: 2,
+  urlCounter: 69,
   commonTags: List([
     "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
     "#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > h5",

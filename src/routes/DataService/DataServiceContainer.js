@@ -51,6 +51,8 @@ function DataServiceContainer() {
     }
   };
 
+  const handleCSVOutput = () => {};
+
   return (
     <>
       <Helmet>
