@@ -20,4 +20,4 @@ export const stateHead = Map({
 
 export const stateRow = Record({ url: "", tagResult: List([]) });
 
-export const stateRows = List([stateRow()]);
+export const stateRows = List([]);
