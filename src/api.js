@@ -27,7 +27,11 @@ export const CrwalingAPI = {
       data: urlPDFAPIData({ url }),
     }),
   urlNTagAPI: ({ url, tags }) =>
-    axios({ ...config, data: urlNTagData({ url, tags }) }),
+    axios({
+      ...config,
+      url: `${key.SERVER_URI}api/basecrawl/urlNTag`,
+      data: urlNTagData({ url, tags }),
+    }),
 };
 
 const urlTagAPIData = ({ url, tag }) => {
