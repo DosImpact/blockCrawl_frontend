@@ -90,7 +90,10 @@ function DataServiceContainer() {
         <strong>stateRows</strong>
         <pre>{JSON.stringify(stateRows, null, 2)}</pre>
       </div>
-      <DataServicePresenter />
+      <DataServicePresenter
+        stateHead={stateHead.toJS()}
+        stateRows={stateRows.toJS()}
+      />
     </>
   );
 }

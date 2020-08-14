@@ -1,73 +1,65 @@
 import React from "react";
-import PropTypes from "prop-types";
-import clsx from "clsx";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { AutoSizer, Column, Table } from "react-virtualized";
 
-import VirtualizedTable from "./VirtualizedTable";
-// ---
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
-const sample = [
-  ["Frozen yoghurt", 159, 6.0, 24, 4.0],
-  ["Ice cream sandwich", 237, 9.0, 37, 4.3],
-  ["Eclair", 262, 16.0, 24, 6.0],
-  ["Cupcake", 305, 3.7, 67, 4.3],
-  ["Gingerbread", 356, 16.0, 49, 3.9],
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-function createData(id, dessert, calories, fat, carbs, protein) {
-  return { id, dessert, calories, fat, carbs, protein };
-}
+const makeHeadArray = (stateHead) => {
+  return [stateHead.url].concat(stateHead.tags);
+};
+const makeRowArray = (stateRow) => {
+  return [stateRow.url].concat(stateRow.tagResult);
+};
 
-const rows = [];
+export default function DataServicePresenter({ stateHead, stateRows }) {
+  const classes = useStyles();
+  console.log(stateHead, stateRows);
 
-for (let i = 0; i < 200; i += 1) {
-  const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-  rows.push(createData(i, ...randomSelection));
-}
-
-function DataServicePresenter() {
   return (
-    <Paper style={{ height: 800, width: "100%" }}>
-      <VirtualizedTable
-        rowCount={rows.length}
-        rowGetter={({ index }) => rows[index]}
-        columns={[
-          {
-            width: 200,
-            label: "Dessert",
-            dataKey: "dessert",
-          },
-          {
-            width: 120,
-            label: "Calories\u00A0(g)",
-            dataKey: "calories",
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: "Fat\u00A0(g)",
-            dataKey: "fat",
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: "Carbs\u00A0(g)",
-            dataKey: "carbs",
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: "Protein\u00A0(g)",
-            dataKey: "protein",
-            numeric: true,
-          },
-        ]}
-      />
-    </Paper>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            {makeHeadArray(stateHead).map((e, idx) => {
+              return <TableCell>{e}</TableCell>;
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {stateRows.map((row, idx) => {
+            const array = makeRowArray(row);
+            return (
+              <TableRow key={row.url}>
+                {array.map((e, idx) => (
+                  <TableCell>{e}</TableCell>
+                ))}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
-
-export default DataServicePresenter;
