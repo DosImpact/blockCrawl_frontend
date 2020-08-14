@@ -49,7 +49,7 @@ export default function DataServicePresenter({ stateHead, stateRows }) {
                 {array.map((e, idx) => {
                   if (idx === 0) {
                     return (
-                      <TableCell>
+                      <TableCell key={idx}>
                         <a
                           rel="noreferrer"
                           target="_blank"
@@ -61,7 +61,7 @@ export default function DataServicePresenter({ stateHead, stateRows }) {
                       </TableCell>
                     );
                   }
-                  return <TableCell>{e}</TableCell>;
+                  return <TableCell key={idx}>{e}</TableCell>;
                 })}
               </TableRow>
             );

@@ -24,7 +24,7 @@ function DataServiceContainer() {
     const {
       data: { result },
     } = await CrwalingAPI.urlNTagAPI({ url, tags });
-    console.log(result);
+    // console.log(result);
     return result;
   };
 
@@ -35,9 +35,9 @@ function DataServiceContainer() {
       return res;
     });
     let q = Array.from(state.toJS().urls);
-    console.log(q);
+    // console.log(q);
     while (q.length !== 0) {
-      console.log(q[0]);
+      // console.log(q[0]);
       const result = await fetchData(q[0], tags);
       setStateRows((prev) => {
         return prev.push(
@@ -51,7 +51,18 @@ function DataServiceContainer() {
     }
   };
 
-  const handleCSVOutput = () => {};
+  const _handleDataToArray = () => {
+    const arrayResult = stateRows.toJS().reduce((acc, row) => {
+      // console.log("acc", acc);
+      // console.log("row", row);
+      let tmp = [];
+      tmp.push(row?.url);
+      tmp = tmp.concat(row?.tagResult);
+      acc.push(tmp);
+      return acc;
+    }, []);
+    return arrayResult;
+  };
 
   return (
     <>
@@ -63,6 +74,7 @@ function DataServiceContainer() {
         handleResetData={handleResetData}
         setState={setState}
         startCompile={startCompile}
+        _handleDataToArray={_handleDataToArray}
       />
 
       <DataServicePresenter

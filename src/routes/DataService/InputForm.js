@@ -13,6 +13,8 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
+import { CSVLink } from "react-csv";
+
 import { toast } from "react-toastify";
 
 import { useFormik } from "formik";
@@ -111,6 +113,15 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     padding: "0 30px",
   },
+  buttonRed: {
+    background: "linear-gradient(45deg, #a29bfe 20%, #fc4545 100%)",
+    border: 0,
+    borderRadius: 3,
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "white",
+    height: 48,
+    padding: "0 30px",
+  },
   table: {
     minWidth: "100%",
   },
@@ -124,10 +135,12 @@ export default function InputForm({
   setState,
   handleResetData,
   startCompile,
+  _handleDataToArray,
 }) {
   const classes = useStyles();
   const { tagCounter, urlCounter } = state;
 
+  const [csvData, csvDataSet] = useState(null);
   const [urlsText, setUrlsText] = useState(sampleData);
   const initialValues = state.commonTags.reduce((store, tag, idx) => {
     store[`tag${idx}`] = tag;
@@ -166,6 +179,8 @@ export default function InputForm({
 
   const handleCSVOutput = () => {
     toast.dark("엑셀로 변환합니다.");
+    const result = _handleDataToArray();
+    csvDataSet(result);
   };
 
   const handleUpdateUrls = () => {
@@ -262,6 +277,22 @@ export default function InputForm({
                   >
                     엑셀로 저장
                   </Button>
+                  {csvData && (
+                    <Button
+                      style={{ marginLeft: "20px" }}
+                      onClick={handleCSVOutput}
+                      className={classes.buttonRed}
+                    >
+                      <CSVLink
+                        data={csvData}
+                        filename={"my-file.csv"}
+                        className="btn btn-primary"
+                        target="_blank"
+                      >
+                        Download me
+                      </CSVLink>
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             </TableBody>
