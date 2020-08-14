@@ -16,6 +16,75 @@ import Button from "@material-ui/core/Button";
 
 import { useFormik } from "formik";
 
+const sampleData = `
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=189069"
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=182234
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=188909
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=178351
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185917
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=134824
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=189618
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=52515
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=67457
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=192247
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=192066
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=194799
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=193066
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185273
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=182809
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=163788
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=177608
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=187351
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=194693
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185269
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=183429
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=190355
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=191143
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=106360
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=195180
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=186239
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=187294
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=174261
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=136872
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=168051
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185282
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185150
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=189633
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=29059
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=10001
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=179307
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185285
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=191642
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=134963
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=85825
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185256
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=189747
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=10480
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=136870
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=14448
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=189624
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=36651
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=173247
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=179397
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=186348
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=171518
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=159311
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=168050
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=194368
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=186235
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=181099
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=37742
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=185292
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=182387
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=79770
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=156912
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=56220
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=179414
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=27111
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=179394
+https://movie.naver.com/movie/bi/mi/basic.nhn?code=40932
+`;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -33,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 30px",
   },
   buttonSucces: {
-    background: "linear-gradient(45deg, #a29bfe 20%,#FF8E53 40%, #FF8E53 100%)",
+    background: "linear-gradient(45deg, #a29bfe 20%, #45fc60 100%)",
     border: 0,
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -58,9 +127,7 @@ export default function InputForm({
   const classes = useStyles();
   const { commonTags, tagCounter, urls, urlCounter } = state;
 
-  const [urlsText, setUrlsText] = useState(
-    "https://movie.naver.com/movie/bi/mi/basic.nhn?code=182234\nhttps://movie.naver.com/movie/bi/mi/basic.nhn?code=188909"
-  );
+  const [urlsText, setUrlsText] = useState(sampleData);
   const initialValues = state.commonTags.reduce((store, tag, idx) => {
     store[`tag${idx}`] = tag;
     return store;
@@ -175,15 +242,21 @@ export default function InputForm({
                   <Button type="submit" className={classes.button}>
                     태그 적용하기
                   </Button>
+                  <Button
+                    onClick={handleStartTest}
+                    className={classes.buttonSucces}
+                  >
+                    테스트 하기
+                  </Button>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
       </form>
-      <div>
+      {/* <div>
         <pre>{JSON.stringify(state, null, 2)}</pre>
-      </div>
+      </div> */}
     </>
   );
 }
