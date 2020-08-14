@@ -200,18 +200,19 @@ export default function InputForm({
                 >
                   태그 추가하기
                 </Button>
-              </TableCell>
 
-              <TableCell>
                 <Button
+                  style={{ marginLeft: "20px" }}
                   onClick={handleStartTest}
                   className={classes.buttonSucces}
                 >
                   테스트 하기
                 </Button>
-              </TableCell>
-              <TableCell>
-                <Button onClick={handleReset} className={classes.button}>
+                <Button
+                  style={{ marginLeft: "20px" }}
+                  onClick={handleReset}
+                  className={classes.button}
+                >
                   초기화 하기
                 </Button>
               </TableCell>
@@ -243,6 +244,7 @@ export default function InputForm({
                     태그 적용하기
                   </Button>
                   <Button
+                    style={{ marginLeft: "10px" }}
                     onClick={handleStartTest}
                     className={classes.buttonSucces}
                   >

@@ -29,17 +29,7 @@ function DataServiceContainer() {
   };
 
   const startCompile = async () => {
-    console.log("startCompile");
     const tags = state.toJS().commonTags;
-    // const result = await CrwalingAPI.urlNTagAPI({
-    //   url: "https://movie.naver.com/movie/bi/mi/basic.nhn?code=134824",
-    //   tags: [
-    //     "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
-    //     "#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > h5",
-    //     "#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > p",
-    //   ],
-    // });
-    // console.log(result);
     setStateHead((prev) => {
       const res = prev.set("tags", state.toJS().commonTags);
       return res;
@@ -59,15 +49,6 @@ function DataServiceContainer() {
       });
       q.shift();
     }
-    //  const {
-    //   data: {
-    //     data: { urlTag: data },
-    //   },
-    //   status,
-    // } = await CrwalingAPI.urlTagAPI({
-    //   url: currentURL,
-    //   tag: value,
-    // });
   };
 
   return (
@@ -86,16 +67,6 @@ function DataServiceContainer() {
         stateHead={stateHead.toJS()}
         stateRows={stateRows.toJS()}
       />
-
-      {/* <div>
-        <strong>stateHead</strong>
-        <pre>{JSON.stringify(stateHead, null, 2)}</pre>
-      </div>
-
-      <div>
-        <strong>stateRows</strong>
-        <pre>{JSON.stringify(stateRows, null, 2)}</pre>
-      </div> */}
     </>
   );
 }
