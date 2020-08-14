@@ -1,4 +1,4 @@
-import { Map, List } from "immutable";
+import { Map, List, Record } from "immutable";
 
 export default Map({
   urls: List([
@@ -12,3 +12,12 @@ export default Map({
   ]),
   tagCounter: 2,
 });
+
+export const stateHead = Map({
+  url: "URL",
+  tags: List([]),
+});
+
+export const stateRow = Record({ url: "", tagResult: List([]) });
+
+export const stateRows = List([stateRow()]);

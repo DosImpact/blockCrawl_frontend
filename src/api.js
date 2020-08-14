@@ -26,6 +26,8 @@ export const CrwalingAPI = {
       ...config,
       data: urlPDFAPIData({ url }),
     }),
+  urlNTagAPI: ({ url, tags }) =>
+    axios({ ...config, data: urlNTagData({ url, tags }) }),
 };
 
 const urlTagAPIData = ({ url, tag }) => {
@@ -55,3 +57,21 @@ const urlPDFAPIData = ({ url }) => {
     `,
   });
 };
+
+const urlNTagData = ({ url, tags }) => {
+  return JSON.stringify({
+    url,
+    tags,
+  });
+};
+/**
+ * var data = JSON.stringify(
+ * {"url":
+ * "https://movie.naver.com/movie/bi/mi/basic.nhn?code=134824","
+ * tags":[
+ * "#content > div.article > div.mv_info_area > div.mv_info > h3 > a:nth-child(1)",
+ * "#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > h5",
+ * "#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div > p"
+ * ]});
+
+ */

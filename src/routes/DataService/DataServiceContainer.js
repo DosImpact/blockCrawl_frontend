@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DataServicePresenter from "./DataServicePresenter";
 import InputForm from "./InputForm";
 import initData from "./InitData";
+import { Helmet } from "react-helmet";
 
 function DataServiceContainer() {
   const [state, setState] = useState(initData);
@@ -16,6 +17,9 @@ function DataServiceContainer() {
 
   return (
     <>
+      <Helmet>
+        <title>BlockCrawl | 데이터 서비스</title>
+      </Helmet>
       <InputForm
         state={state.toJS()}
         handleResetData={handleResetData}

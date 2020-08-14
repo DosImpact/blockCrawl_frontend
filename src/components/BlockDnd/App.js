@@ -5,6 +5,7 @@ import InitData from "./InitData";
 import { CrwalingAPI } from "../../api";
 
 import AppPresenter from "./AppPresenter";
+import { Helmet } from "react-helmet";
 
 const compileStart = async (state, setState) => {
   console.log("compileStart");
@@ -308,14 +309,19 @@ const App = () => {
   };
 
   return (
-    <AppPresenter
-      state={state.toJS()}
-      setState={setState}
-      compileStart={complie}
-      onDragEnd={onDragEnd}
-      onDragStart={onDragStart}
-      onDragUpdate={onDragUpdate}
-    />
+    <>
+      <Helmet>
+        <title>BlockCrawl 블록코딩 </title>
+      </Helmet>
+      <AppPresenter
+        state={state.toJS()}
+        setState={setState}
+        compileStart={complie}
+        onDragEnd={onDragEnd}
+        onDragStart={onDragStart}
+        onDragUpdate={onDragUpdate}
+      />
+    </>
   );
 };
 
