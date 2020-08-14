@@ -14,7 +14,15 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles({
+import { useFormik } from "formik";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
+  },
   button: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
@@ -27,7 +35,10 @@ const useStyles = makeStyles({
   table: {
     minWidth: "100%",
   },
-});
+  tagTextField: {
+    minWidth: "100%",
+  },
+}));
 
 export default function InputForm({ state, setState }) {
   const classes = useStyles();
@@ -36,6 +47,15 @@ export default function InputForm({ state, setState }) {
   const [urlsText, setUrlsText] = useState(
     "https://movie.naver.com/movie/bi/mi/basic.nhn?code=182234\nhttps://movie.naver.com/movie/bi/mi/basic.nhn?code=188909"
   );
+  const formik = useFormik({
+    initialValues: commonTags.reduce((store, tag, idx) => {
+      store[`tag${idx}`] = tag;
+      return store;
+    }, {}),
+    onSubmit: (data) => {
+      console.log(data);
+    },
+  });
 
   const handleUrlsTextChange = (e) => {
     setUrlsText(e.target.value);
@@ -53,8 +73,17 @@ export default function InputForm({ state, setState }) {
     );
   };
 
-  const handleAddTag = () => {
-    setState((prev) => prev.setIn(["tagCounter"], tagCounter + 1));
+  const handleAddTagCounter = () => {
+    console.log("추가");
+    setState((prev) =>
+      prev
+        .updateIn(["tagCounter"], (tagCounter) => tagCounter + 1)
+        .updateIn(["commonTags"], (arrs) => arrs.push(""))
+    );
+  };
+  const handleUpdateTags = () => {
+    // const nodes = document.querySelectorAll("tagTextField");
+    // console.log(nodes);
   };
 
   return (
@@ -69,13 +98,17 @@ export default function InputForm({ state, setState }) {
               <TableCell>현재 urls 수 :{urlCounter}</TableCell>
               <TableCell>현재 tags 수 :{tagCounter}</TableCell>
               <TableCell>
-                <Button onClick={handleAddTag} className={classes.button}>
+                <Button
+                  onClick={handleAddTagCounter}
+                  className={classes.button}
+                >
                   태그 추가하기
                 </Button>
               </TableCell>
+
               <TableCell>
-                <Button onClick={handleReset} className={classes.button}>
-                  초기화 하기
+                <Button onClick={handleUpdateTags} className={classes.button}>
+                  태그 적용하기
                 </Button>
               </TableCell>
               <TableCell>
@@ -83,35 +116,56 @@ export default function InputForm({ state, setState }) {
                   테스트 하기
                 </Button>
               </TableCell>
+              <TableCell>
+                <Button onClick={handleReset} className={classes.button}>
+                  초기화 하기
+                </Button>
+              </TableCell>
             </TableRow>
           </TableHead>
         </Table>
       </TableContainer>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <TextareaAutosize
-                  rowsMax={100}
-                  style={{ width: "100%" }}
-                  aria-label="maximum height"
-                  placeholder="Maximum 4 rows"
-                  value={urlsText}
-                  onChange={handleUrlsTextChange}
-                />
-              </TableCell>
-            </TableRow>
-            {R.range(0, tagCounter).map((idx) => (
-              <TableRow key={idx}>
-                <TableCell colSpan={tagCounter}>
-                  <TextField label={`tag${idx}`}>Tag{idx}</TextField>
+      <form onSubmit={formik.handleSubmit}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <TextareaAutosize
+                    rowsMax={100}
+                    style={{ width: "100%" }}
+                    aria-label="maximum height"
+                    placeholder="Maximum 4 rows"
+                    value={urlsText}
+                    onChange={handleUrlsTextChange}
+                  />
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+
+              {Object.entries(formik.values).map((e, idx) => {
+                return (
+                  <TableRow key={idx}>
+                    <TableCell>
+                      <TextField
+                        value={e[1]}
+                        className={classes.tagTextField}
+                        label={e[0]}
+                      >
+                        Tag{idx}
+                      </TextField>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+              <TableRow>
+                <TableCell>
+                  <button type="submit">제출</button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </form>
     </>
   );
 }
