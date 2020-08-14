@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as R from "ramda";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -47,15 +47,29 @@ export default function InputForm({ state, setState }) {
   const [urlsText, setUrlsText] = useState(
     "https://movie.naver.com/movie/bi/mi/basic.nhn?code=182234\nhttps://movie.naver.com/movie/bi/mi/basic.nhn?code=188909"
   );
-  const formik = useFormik({
-    initialValues: commonTags.reduce((store, tag, idx) => {
+  const [initialValues, setInitialValues] = useState(
+    state.commonTags.reduce((store, tag, idx) => {
       store[`tag${idx}`] = tag;
       return store;
-    }, {}),
+    }, {})
+  );
+  console.log("initialValues", initialValues);
+  const formik = useFormik({
+    initialValues,
     onSubmit: (data) => {
       console.log(data);
     },
   });
+
+  useEffect(() => {
+    formik.setValues(
+      state.commonTags.reduce((store, tag, idx) => {
+        store[`tag${idx}`] = tag;
+        return store;
+      }, {})
+    );
+    return () => {};
+  }, [state]);
 
   const handleUrlsTextChange = (e) => {
     setUrlsText(e.target.value);
@@ -141,22 +155,25 @@ export default function InputForm({ state, setState }) {
                   />
                 </TableCell>
               </TableRow>
-
-              {Object.entries(formik.values).map((e, idx) => {
+              {/* {R.range(0, tagCounter).map((e, idx) => {
                 return (
                   <TableRow key={idx}>
                     <TableCell>
                       <TextField
+                        onChange={formik.handleChange}
                         value={e[1]}
                         className={classes.tagTextField}
                         label={e[0]}
+                        id={e[0]}
                       >
                         Tag{idx}
                       </TextField>
                     </TableCell>
                   </TableRow>
                 );
-              })}
+              })} */}
+
+              <TagsInput classes={classes} formik={formik} />
               <TableRow>
                 <TableCell>
                   <button type="submit">제출</button>
@@ -166,6 +183,33 @@ export default function InputForm({ state, setState }) {
           </Table>
         </TableContainer>
       </form>
+      <div>
+        <pre>{JSON.stringify(state, null, 2)}</pre>
+      </div>
     </>
   );
 }
+
+const TagsInput = ({ formik, classes }) => {
+  return (
+    <>
+      {Object.entries(formik.values).map((e, idx) => {
+        return (
+          <TableRow key={idx}>
+            <TableCell>
+              <TextField
+                onChange={formik.handleChange}
+                value={e[1]}
+                className={classes.tagTextField}
+                label={e[0]}
+                id={e[0]}
+              >
+                Tag{idx}
+              </TextField>
+            </TableCell>
+          </TableRow>
+        );
+      })}
+    </>
+  );
+};
