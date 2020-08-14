@@ -24,7 +24,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    background: "linear-gradient(45deg, #a29bfe 30%,#a29bfe 60%, #FF8E53 90%)",
+    border: 0,
+    borderRadius: 3,
+    boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+    color: "white",
+    height: 48,
+    padding: "0 30px",
+  },
+  buttonSucces: {
+    background: "linear-gradient(45deg, #a29bfe 20%,#FF8E53 40%, #FF8E53 100%)",
     border: 0,
     borderRadius: 3,
     boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -40,24 +49,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function InputForm({ state, setState }) {
+export default function InputForm({
+  state,
+  setState,
+  handleResetData,
+  startCompile,
+}) {
   const classes = useStyles();
   const { commonTags, tagCounter, urls, urlCounter } = state;
 
   const [urlsText, setUrlsText] = useState(
     "https://movie.naver.com/movie/bi/mi/basic.nhn?code=182234\nhttps://movie.naver.com/movie/bi/mi/basic.nhn?code=188909"
   );
-  const [initialValues, setInitialValues] = useState(
-    state.commonTags.reduce((store, tag, idx) => {
-      store[`tag${idx}`] = tag;
-      return store;
-    }, {})
-  );
-  console.log("initialValues", initialValues);
+  const initialValues = state.commonTags.reduce((store, tag, idx) => {
+    store[`tag${idx}`] = tag;
+    return store;
+  }, {});
   const formik = useFormik({
     initialValues,
     onSubmit: (data) => {
       console.log(data);
+      setState((prev) => prev.setIn(["commonTags"], Object.values(data)));
     },
   });
 
@@ -75,8 +87,12 @@ export default function InputForm({ state, setState }) {
     setUrlsText(e.target.value);
     handleUpdateUrls();
   };
-  const handleReset = () => {};
-  const handleSubmit = () => {};
+  const handleReset = () => {
+    handleResetData();
+  };
+  const handleStartTest = () => {
+    startCompile();
+  };
 
   const handleUpdateUrls = () => {
     let urlsSplited = urlsText.split("\n");
@@ -88,7 +104,6 @@ export default function InputForm({ state, setState }) {
   };
 
   const handleAddTagCounter = () => {
-    console.log("추가");
     setState((prev) =>
       prev
         .updateIn(["tagCounter"], (tagCounter) => tagCounter + 1)
@@ -121,12 +136,10 @@ export default function InputForm({ state, setState }) {
               </TableCell>
 
               <TableCell>
-                <Button onClick={handleUpdateTags} className={classes.button}>
-                  태그 적용하기
-                </Button>
-              </TableCell>
-              <TableCell>
-                <Button onClick={handleSubmit} className={classes.button}>
+                <Button
+                  onClick={handleStartTest}
+                  className={classes.buttonSucces}
+                >
                   테스트 하기
                 </Button>
               </TableCell>
@@ -155,28 +168,13 @@ export default function InputForm({ state, setState }) {
                   />
                 </TableCell>
               </TableRow>
-              {/* {R.range(0, tagCounter).map((e, idx) => {
-                return (
-                  <TableRow key={idx}>
-                    <TableCell>
-                      <TextField
-                        onChange={formik.handleChange}
-                        value={e[1]}
-                        className={classes.tagTextField}
-                        label={e[0]}
-                        id={e[0]}
-                      >
-                        Tag{idx}
-                      </TextField>
-                    </TableCell>
-                  </TableRow>
-                );
-              })} */}
 
               <TagsInput classes={classes} formik={formik} />
               <TableRow>
                 <TableCell>
-                  <button type="submit">제출</button>
+                  <Button type="submit" className={classes.button}>
+                    태그 적용하기
+                  </Button>
                 </TableCell>
               </TableRow>
             </TableBody>
