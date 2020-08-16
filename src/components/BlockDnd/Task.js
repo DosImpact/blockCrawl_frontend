@@ -72,7 +72,7 @@ const renderState = (columnId, task) => {
           </span>
         )}
         {!task.result.loading && task.result.completed && task.result.data && (
-          <span>{JSON.stringify(task.result.data)}</span>
+          <SpanResult>{task?.result?.data || "데이터 없음"}</SpanResult>
         )}
         {task.content === "Get IMG" &&
           !task.result.loading &&
@@ -85,7 +85,7 @@ const renderState = (columnId, task) => {
               height="200px"
             />
           )}
-        {JSON.stringify(task.result)}
+        {/* {JSON.stringify(task.result)} */}
       </>
     );
   } else {
@@ -148,4 +148,8 @@ const Container = styled.div`
   &:hover {
     background-color: ${(props) => props.theme.lightPupleColor};
   }
+`;
+
+const SpanResult = styled.span`
+  font-size: 25px;
 `;

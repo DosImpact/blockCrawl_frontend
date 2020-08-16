@@ -29,6 +29,7 @@ function DataServiceContainer() {
   };
 
   const startCompile = async () => {
+    console.log("startCompile", state.toJS());
     const tags = state.toJS().commonTags;
     setStateHead((prev) => {
       const res = prev.set("tags", state.toJS().commonTags);
