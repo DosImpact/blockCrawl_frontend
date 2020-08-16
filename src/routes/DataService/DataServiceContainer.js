@@ -53,11 +53,10 @@ function DataServiceContainer() {
 
   const _handleDataToArray = () => {
     const arrayResult = stateRows.toJS().reduce((acc, row) => {
-      // console.log("acc", acc);
-      // console.log("row", row);
       let tmp = [];
       tmp.push(row?.url);
-      tmp = tmp.concat(row?.tagResult);
+      let tagResultParsed = row?.tagResult.map((e) => e.replace(/,/gi, ""));
+      tmp = tmp.concat(tagResultParsed);
       acc.push(tmp);
       return acc;
     }, []);
