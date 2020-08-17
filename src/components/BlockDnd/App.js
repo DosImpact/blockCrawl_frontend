@@ -297,8 +297,9 @@ const App = () => {
     }
     //CASE: Trash Bin 드랍 : Task의 삭제
     if (destination.droppableId === "column-3") {
+      // console.log("CASE: Trash Bin 드랍 : Task의 삭제");
       setState((prev) =>
-        prev.deleteIn(["columns", startCol.id, "tasksId"], (pdata) =>
+        prev.updateIn(["columns", startCol.id, "tasksId"], (pdata) =>
           pdata.splice(startIdx, 1)
         )
       );

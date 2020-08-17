@@ -72,7 +72,9 @@ const renderState = (columnId, task) => {
           </span>
         )}
         {!task.result.loading && task.result.completed && task.result.data && (
-          <SpanResult>{task?.result?.data || "데이터 없음"}</SpanResult>
+          <SpanResult>
+            {task?.result?.data.replace(/\s+/gi, " ") || "데이터 없음"}
+          </SpanResult>
         )}
         {task.content === "Get IMG" &&
           !task.result.loading &&
