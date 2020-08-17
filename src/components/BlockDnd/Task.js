@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import Button from "../../components/Button";
 import { Draggable } from "react-beautiful-dnd";
 import key from "../../config/key";
 
@@ -87,12 +88,31 @@ const renderState = (columnId, task) => {
               height="200px"
             />
           )}
+        {task.content === "Get PDF" &&
+          !task.result.loading &&
+          task.result.completed && (
+            <Button
+              text="GET PDF"
+              onClick={() =>
+                handleGetFile(`${key.SERVER_URI}download/${task.result.data}`)
+              }
+            />
+          )}
         {/* {JSON.stringify(task.result)} */}
       </>
     );
   } else {
     return <></>;
   }
+};
+const handleGetFile = (src) => {
+  console.log("handleGetFile", src);
+  const downloaderTag = document.createElement("iframe");
+  // const BASE_URL = "http://localhost:4000/download/";
+  downloaderTag.src = src;
+  downloaderTag.style.display = "none";
+  console.log("donwload start...", src);
+  document.body.appendChild(downloaderTag);
 };
 
 const useInput = (init) => {

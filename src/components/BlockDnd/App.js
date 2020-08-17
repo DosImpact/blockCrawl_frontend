@@ -150,8 +150,8 @@ const compileStart = async (state, setState) => {
     }
     // loading state로 변환
     setState((prev) => {
-      prev.tasks[key].result.loading = true;
-      return { ...prev };
+      // prev.tasks[key].result.loading = true;
+      return prev.setIn(["tasks", key, "result", "loading"], true);
     });
 
     try {
