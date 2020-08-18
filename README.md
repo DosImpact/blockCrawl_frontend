@@ -134,20 +134,20 @@ CMD npm start
 - STEP3 build docker file
 
 ```
-docker build -t blockcrawl_react:1.0.0 .
+docker build -t ehdudtkatka/bc_front:0.0.4 .
 ```
 
 - STEP4 execution docker image
 
 ```
-docker run --name blockcrawl_front_server -itd -p 3000:80 blockcrawl_react:1.0.0
+docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
 
 ```
 
 - STEP5 check container and monit
 
 ```
-docker run --name blockcrawl_front_server -itd -p 3000:80 blockcrawl_react:1.0.0
+docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
 docker attach -it blockcrawl_front_server bash
 ```
 
@@ -199,20 +199,20 @@ CMD npm run start
 - STEP3 build docker file
 
 ```
-docker build -t blockcrawl_nodejs:1.0.0 .
+docker build -t ehdudtkatka/bc_back:0.4 .
 ```
 
 - STEP4 execution docker image
 
 ```
-docker run --name blockcrawl_back_server -itd -p 4000:3000 blockcrawl_nodejs:1.0.0
+docker run --name bc_back -itd -p 4000:4000 ehdudtkatka/bc_back:0.4
 
 ```
 
 - STEP5 check container and monit
 
 ```
-docker run --name blockcrawl_back_server -itd -p 4000:3000 blockcrawl_nodejs:1.0.0
+docker run --name blockcrawl_back_server -itd -p 4000:4000 ehdudtkatka/bc_back:0.4
 docker attach -it blockcrawl_back_server bash
 ```
 
