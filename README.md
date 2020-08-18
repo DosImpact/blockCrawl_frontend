@@ -1,65 +1,102 @@
-# BlockCrwal/FrontEnd
+# BlockCrwal
 
-## published site
+# 교육용 블록코딩을 활용한 웹자동화 제작 플렛폼
 
-[https://dosimpact.github.io/blockCrawl_frontend/](https://dosimpact.github.io/blockCrawl_frontend/)
+# 설치 및 실행
 
-- Toast Cloud WAS
+1. front-end, back-end 깃허브 클론
+   [https://github.com/DosImpact/blockCrawl_frontend](https://github.com/DosImpact/blockCrawl_frontend)
+   [https://github.com/DosImpact/blockCrawl_backend](https://github.com/DosImpact/blockCrawl_backend)
 
-[http://133.186.241.220/blockCrawl_frontend/](http://133.186.241.220/blockCrawl_frontend/)
+2. npm install or yarn install
 
-# install
+- example
 
 ```
-# yarn install
-- 모듈을 설치합니다.
-
-# yarn start
-
-- 서버를 실행합니다.(Dev)
-
-# yarn deploy
-- gh-pages에 베포합니다.
+C:\Users\Dos\Desktop\Projects\blockcrawl_frontend>yarn install
+C:\Users\Dos\Desktop\Projects\blockcrawl_backend>yarn install
 ```
 
-# require env
+3. 실행하기 - yarn start|dev
 
-```js
-    "@apollo/react-hooks": "^3.1.5",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "apollo-boost": "^0.4.7",
-    "axios": "^0.19.2",
-    "gh-pages": "^2.2.0",
-    "graphql": "^15.0.0",
-    "graphql-tag": "^2.10.3",
-    "react": "^16.13.1",
-    "react-beautiful-dnd": "^13.0.0",
-    "react-dnd": "^11.1.3",
-    "react-dnd-html5-backend": "^11.1.3",
-    "react-dom": "^16.13.1",
-    "react-grid-layout": "^0.18.3",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "react-toastify": "^6.0.6",
-    "styled-components": "^5.1.0",
-    "styled-reset": "^4.1.4"
+- example
+
+```
+C:\Users\Dos\Desktop\Projects\blockcrawl_frontend>yarn start
+yarn run v1.21.1
+$ react-scripts start
+
+
+C:\Users\Dos\Desktop\Projects\blockCrawl_backend>yarn dev
+yarn run v1.21.1
+$ nodemon --exec babel-node src/server.js
+✔ Server is running on http://localhost:4000
+✔ MongoDB connected...
+✔ puppeteer is running
 ```
 
-# TODO
+# 개발동기
 
-- [✔] one url | one selector 컴포넌트 개발 | 단순 주소 입력 > 단순 셀럭터 하나 입력
-- [✔] N url | one selector
-- [✔] eg) TDD1 : 네이버 영화 사이트 url 여러개 입력하고, 특정 태그 넣기. 그리고 반환하는 컴포넌트 제작
-- [✔] N url | one selector, next one
-- [✔] N url | one selector, 하위 one
-- [✔] N url | img
-- [✔] N url | pdf
-- [✔] N url | N selector
-- [✔] N url | N selector > xlsx
+```c
+사무직 업무를 하는데 있어 매번 반복적인 업무가 있습니다. 바로 데이터를 수집하고 처리하는 일입니다.
+매번 이런 단순하고 동일한 과정의 업무을 처리하기위해 업무 자동화의 니즈가 증가합니다.
+하지만 웹 자동화 기술은 일반 사무직 근로자들이 배우려면 상당한 러닝 커브가 있습니다.
+언어의 자체 기초문법을 배우고 로직 구현을 위해서는 최소 24시간의 학습 시간이 필요합니다.
+그렇다고 단순히 자료 조사를 위해 외주 작업을 맡기기에는 무리가 있어 결국 반복적인 업무를 직접 하게됩니다.
 
-# Docker Devops - DevServer Container
+
+따라서 누구나 쉽게 GUI환경에서 자동화 로직을 구현할 수 있는 개발 플랫폼을 만들게 되었습니다.
+스크립트 코드 작성없이 누구나 손쉽게 교육용 블록코딩으로
+자동화 소프트웨어를 만들어 볼 수 있습니다.
+그리고 잘 만든 블록 로직을 다른 사람과 공유하고 데이터 분석이 가능한 클라우드 플랫폼이 최종 목표입니다.
+```
+
+# 개발 목표
+
+```
+1. 블록코딩 시스템을 완성하여 웹문서의 데이터를 수집하고, 이미지 및 PDF 정보도 수집할 수 있습니다.
+2. 빅데이터 수집을 위한 시스템을 만들고 수집된 정보를 엑셀로 다운받을 수 있습니다.
+```
+
+# 주요 기능
+
+```
+블록코딩으로
+웹자동화 로직구현 가능
+
+GoToPage
+특정 URL페이지 이동
+
+Get Selector
+HTML 데이터 수집
+
+Get PDF/IMG
+현재 페이지를 PDF,IMG로 변환
+
+```
+
+```
+다수의 ULR 과 페이지당 테그 입력하여 엑셀데이터 추출이 가능합니다.
+
+예시
+금융데이터 수집
+커뮤니티사이트 데이터 수집
+```
+
+# 구조
+
+![./Docs/blockcrawl_arch.png](./Docs/blockcrawl_arch.png)
+
+# WebUI & demo
+
+![demo1.gif](./Docs/demo1.gif)
+![demo2.gif](./Docs/demo2.gif)
+![demo3.gif](./Docs/demo3.gif)
+![demo4.gif](./Docs/demo4.gif)
+
+# 베포 하기
+
+# FrontSide Docker Devops - DevServer Container
 
 - STEP1 .dockerignore
 
@@ -96,26 +133,116 @@ CMD npm start
 - STEP3 build docker file
 
 ```
-docker build -t bookadmin_react:1.0.0 .
+docker build -t blockcrawl_react:1.0.0 .
 ```
 
 - STEP4 execution docker image
 
 ```
-docker run --name bookadmin_front_server -itd -p 4441:3000 bookadmin_react:1.0.0
+docker run --name blockcrawl_front_server -itd -p 3000:80 blockcrawl_react:1.0.0
 
 ```
 
 - STEP5 check container and monit
 
 ```
-docker run --name bookadmin_front_server -itd -p 4441:3000 bookadmin_react:1.0.0
-docker attach -it bookadmin_front_server bash
+docker run --name blockcrawl_front_server -itd -p 3000:80 blockcrawl_react:1.0.0
+docker attach -it blockcrawl_front_server bash
 ```
 
-# Design Ref
+# ServerSide Docker Devops - DevServer Container
 
-- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428533?mode=media
-- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428534?mode=media
-- https://dribbble.com/shots/7699472-GitBets-Betting-Platform/attachments/428535?mode=media
-- https://www.youtube.com/watch?v=EaYfFYZ4f3I
+- STEP1 .dockerignore
+
+```
+node_modules
+build
+.dockerignore
+Dockerfile
+Dockerfile.prod
+```
+
+- STEP2 DockerFile
+
+```dockerfile
+FROM node:10.20.1-slim@sha256:05d1d270480b6e99753076b6656bb5a37edb7ca31af20c008568a556bc82d2a8
+
+RUN  apt-get update
+
+RUN  apt-get install -y wget gnupg ca-certificates \
+     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
+RUN  apt-get update \
+     && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
+     --no-install-recommends \
+     && rm -rf /var/lib/apt/lists/* \
+     && wget --quiet https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/sbin/wait-for-it.sh \
+     && chmod +x /usr/sbin/wait-for-it.sh
+
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+ENV PATH=/usr/src/app/node_modules/.bin:$PATH
+
+COPY package.json /usr/src/app/package.json
+RUN npm install --silent
+
+COPY . /usr/src/app
+
+EXPOSE 4000
+
+CMD npm run start
+```
+
+- STEP3 build docker file
+
+```
+docker build -t blockcrawl_nodejs:1.0.0 .
+```
+
+- STEP4 execution docker image
+
+```
+docker run --name blockcrawl_back_server -itd -p 4000:3000 blockcrawl_nodejs:1.0.0
+
+```
+
+- STEP5 check container and monit
+
+```
+docker run --name blockcrawl_back_server -itd -p 4000:3000 blockcrawl_nodejs:1.0.0
+docker attach -it blockcrawl_back_server bash
+```
+
+# 활용 기술
+
+```
+PC 빌드
+Chrome 웹 어플리케이션
+Node.js Win32/64 데스크톱 어플리케이션
+
+기술 및 라이브러리
+Front	 React JS, Hook , Apollo Client, Blockly, Redux
+Back 	 Node.js, Express, Graphql-yoga, multer/s3, puppeteer, Prisma
+Devops   NCP,Docker, Netlify, AWS S3,
+```
+
+# 래퍼런스
+
+```
+깃허브 주소
+https://github.com/DosImpact/blockCrawl_frontend
+https://github.com/DosImpact/blockCrawl_backend
+
+사이트 주소
+웹사이트 LiveDemo :  http://133.186.241.220
+
+사용자 개발자 테스트 가이드
+https://drive.google.com/file/d/1PRBB5QHYw0ZnwUi3E5V3t8-hyRpMkq1E/view?usp=sharing
+
+```
+
+# 이전 버전 Docs
+
+[./Docs/deprecated.md](./Docs/deprecated.md)
