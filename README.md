@@ -5,8 +5,9 @@
 # 설치 및 실행
 
 1. front-end, back-end 깃허브 클론
-   [https://github.com/DosImpact/blockCrawl_frontend](https://github.com/DosImpact/blockCrawl_frontend)
-   [https://github.com/DosImpact/blockCrawl_backend](https://github.com/DosImpact/blockCrawl_backend)
+
+   - [https://github.com/DosImpact/blockCrawl_frontend](https://github.com/DosImpact/blockCrawl_frontend)
+   - [https://github.com/DosImpact/blockCrawl_backend](https://github.com/DosImpact/blockCrawl_backend)
 
 2. npm install or yarn install
 
@@ -17,7 +18,7 @@ C:\Users\Dos\Desktop\Projects\blockcrawl_frontend>yarn install
 C:\Users\Dos\Desktop\Projects\blockcrawl_backend>yarn install
 ```
 
-3. 실행하기 - yarn start|dev
+3. 실행하기 - yarn start | dev
 
 - example
 
