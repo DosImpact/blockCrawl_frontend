@@ -148,7 +148,7 @@ docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
 
 ```
 docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
-docker attach -it blockcrawl_front_server bash
+docker attach -it bc_front bash
 ```
 
 # ServerSide Docker Devops - DevServer Container
@@ -212,8 +212,8 @@ docker run --name bc_back -itd -p 4000:4000 ehdudtkatka/bc_back:0.4
 - STEP5 check container and monit
 
 ```
-docker run --name blockcrawl_back_server -itd -p 4000:4000 ehdudtkatka/bc_back:0.4
-docker attach -it blockcrawl_back_server bash
+docker run --name bc_back -itd -p 4000:4000 ehdudtkatka/bc_back:0.4
+docker attach -it bc_back bash
 ```
 
 # 활용 기술
