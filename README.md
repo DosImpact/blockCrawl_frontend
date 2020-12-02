@@ -1,4 +1,4 @@
-# BlockCrwal
+# Crawlling 아카이브
 
 # 교육용 블록코딩을 활용한 웹자동화 제작 플렛폼
 
@@ -18,7 +18,24 @@ C:\Users\Dos\Desktop\Projects\blockcrawl_frontend>yarn install
 C:\Users\Dos\Desktop\Projects\blockcrawl_backend>yarn install
 ```
 
-3. 실행하기 - yarn start | dev
+3. .env 셋팅
+
+```
+NAME = "DOYOUNG"
+PORT = 4000
+SERVER_URL = "http://localhost:4000/"
+
+# DB_URI = "mongodb://dosimpact:589742@133.186.241.220:27017/admin"
+DB_URI = "mongodb://dosimpact:589742@127.0.0.1:27017/admin"
+
+REMOVE_FILE_TIME = 300000
+
+HEAD_LESS = "false"
+BRS_WIDTH = 1660
+BRS_HEIGHT = 900
+```
+
+4. 실행하기 - yarn start | dev
 
 - example
 
@@ -148,7 +165,7 @@ docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
 
 ```
 docker run --name bc_front -itd -p 80:3000 ehdudtkatka/bc_front:0.4
-docker attach -it bc_front bash
+docker attach -it blockcrawl_front_server bash
 ```
 
 # ServerSide Docker Devops - DevServer Container
